@@ -3,63 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .signup-box {
-            position: relative;
-            width: 300px;
-            padding: 20px;
-            background-color: #f0f0f0;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .signup-box input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        .signup-box label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .signup-box button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .back-button {
-            position: absolute;
-            top: -100px;
-            right: 0px;
-            background-color: #ccc;
-            border: none;
-            padding: 5px 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px; /* 크기 조정 */
-        }
-    </style>
+    <link rel="stylesheet" href="../public/stylesheets/sign-up.css">
+    <script src="../public/javascripts/sign-up.js"></script>
     <title>회원가입</title>
 </head>
 <body>
-    <div class="signup-box">
+    <div class="sign-up-box">
         <button class="back-button" onclick="goBack()">뒤로 가기</button>
         <h2>회원가입</h2>
         <form>
