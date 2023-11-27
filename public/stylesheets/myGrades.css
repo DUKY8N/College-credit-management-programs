@@ -24,6 +24,15 @@ nav {
     height: 100%;
     overflow-y: auto; /* 스크롤 가능하게 하려면 이 줄을 제거하세요 */
 }
+nav a {
+    color: #15212c;
+}
+#selected-nav-list {
+    background-color: #2b9ce1;
+}
+#selected-nav-list a {
+    color: #f2fcfe;
+}
 
 nav ul {
     display: flex;
@@ -35,31 +44,44 @@ nav ul li {
     text-align: center;
     cursor: pointer;
 }
+nav h1 {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0px;
+}
 
 .content {
     width: 100%;
     display: flex;
-    padding: 5% 10%;
+    padding: 5% 4%;
     background-color: #f7f7f7;
 }
 
 section {
     /* border-bottom: 1px solid #ccc; */
-    background-color: greenyellow;
+    background-color: #ffffff;
     width: 50%;
     margin: 10px;
-    overflow-y: scroll; /* 스크롤 가능하게 하려면 이 줄을 제거하세요 */
-    height: auto;
+    overflow-y: scroll;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-#my-score article{
-    background-color: green;
-    height: 100px;
+article {
+    padding: 12px 0px;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    text-align: center;
 }
-
-#graduation-requirements article{
-    background-color: green;
-    height: 11100px;
+article:nth-child(odd) {
+    background-color: #edf3fe;
+}
+article > * {
+    display: block;
+}
+article span {
+    color: #1153f3;
 }
 
 .content-title {
@@ -67,11 +89,52 @@ section {
     background-color: #f0ebed;
     border-bottom: 1px solid #ccc;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     position: sticky;
     top: 0;
 }
 
 .select-date {
     margin: 0px 10px;
+}
+
+.select-date {
+    padding: 5px 10px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    cursor: pointer;
+    margin: 0px 13px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.select-date:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.label {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.edit-button {
+    padding: 5px 10px;
+    margin: auto;
+    border: 1px solid #aaa; /* 경계선 */
+    border-radius: 10px; /* 둥근 모서리 */
+    background-image: linear-gradient(to bottom, #fff, #eee); /* 그라데이션 배경 */
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    text-align: center;
+    color: #333; /* 텍스트 색상 */
+    font-size: 12px; /* 텍스트 크기 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    user-select: none; /* 텍스트 선택 방지 */
+    width: 80px;
 }

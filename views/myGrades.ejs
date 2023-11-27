@@ -11,8 +11,8 @@
         <nav>
             <h1>학점 관리 시스템</h1>
             <ul>
-                <li><a href="#">내 학점</a></li>
-                <li><a href="#">졸업 요건</a></li>
+                <li id="selected-nav-list"><a href="#">내 학점 목록</a></li>
+                <li><a href="#">내 친구 목록</a></li>
             </ul>
             <ul>
                 <li><a href="#">회원 수정</a></li>
@@ -22,13 +22,28 @@
         <div class="content">
             <section id="my-score">
                 <div class="content-title">
-                    <button class="select-date" id="previous"><</button>
-                    2023년도 2학기 성적
-                    <button class="select-date" id="subsequent">></button>
+                    <div>
+                        <button class="select-date" id="previous"><</button>
+                        2023년도 2학기 성적
+                        <button class="select-date" id="subsequent">></button>
+                    </div>
+                    <div class="label">
+                        <p>과목 코드</p>
+                        <p>과목 명</p>
+                        <p>학점</p>
+                        <p>획득 등급</p>
+                        <p>정보 수정</p>
+                    </div>
                 </div>
                 <div class="content-body">
                     <% articles.forEach(function(article) { %>
-                        <article><%= article.content %></article>
+                        <article>
+                            <p><%= article.content %></p>
+                            <p><%= article.content %></p>
+                            <p><%= article.content %></p>
+                            <p><%= article.content %></p>
+                            <button class="edit-button">수정</button>
+                        </article>
                     <% }); %>
                 </div>
             </section>
