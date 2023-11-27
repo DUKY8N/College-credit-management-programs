@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+ul, ol { list-style: none; }
+a { text-decoration: none }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+nav {
+    width: 300px;
+    background-color: #dee3eb;
+    height: 100%;
+    overflow-y: auto; /* 스크롤 가능하게 하려면 이 줄을 제거하세요 */
+}
+
+nav ul {
+    display: flex;
+    flex-direction: column;
+}
+nav ul li {
+    padding: 15px 0px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    padding: 5% 10%;
+    background-color: #f7f7f7;
+}
+
+section {
+    /* border-bottom: 1px solid #ccc; */
+    background-color: greenyellow;
+    width: 50%;
+    margin: 10px;
+    overflow-y: scroll; /* 스크롤 가능하게 하려면 이 줄을 제거하세요 */
+    height: auto;
+}
+
+#my-score article{
+    background-color: green;
+    height: 100px;
+}
+
+#graduation-requirements article{
+    background-color: green;
+    height: 11100px;
+}
+
+.content-title {
+    padding: 18px 0px;
+    background-color: #f0ebed;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+}
+
+.select-date {
+    margin: 0px 10px;
+}

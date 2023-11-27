@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페이지 레이아웃</title>
+    <link rel="stylesheet" href="stylesheets/myGrades.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h1>학점 관리 시스템</h1>
+            <ul>
+                <li><a href="#">내 학점</a></li>
+                <li><a href="#">졸업 요건</a></li>
+            </ul>
+            <ul>
+                <li><a href="#">회원 수정</a></li>
+                <li><a href="#">로그아웃</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <section id="my-score">
+                <div class="content-title">
+                    <button class="select-date" id="previous"><</button>
+                    2023년도 2학기 성적
+                    <button class="select-date" id="subsequent">></button>
+                </div>
+                <div class="content-body">
+                    <% articles.forEach(function(article) { %>
+                        <article><%= article.content %></article>
+                    <% }); %>
+                </div>
+            </section>
+            <section id="graduation-requirements">
+                <div class="content-title">졸업 요건</div>
+                <div class="content-body">
+                    <article>lasldkfj</article>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
