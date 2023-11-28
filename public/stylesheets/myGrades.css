@@ -44,6 +44,9 @@ nav ul li {
     text-align: center;
     cursor: pointer;
 }
+nav ul li:first-child {
+    border-top: 1px solid #ccc;
+}
 nav h1 {
     display: inline-block;
     text-align: center;
@@ -65,6 +68,7 @@ section {
     margin: 10px;
     overflow-y: scroll;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 article {
@@ -100,7 +104,7 @@ article span {
     margin: 0px 10px;
 }
 
-.select-date {
+.square-button {
     padding: 5px 10px;
     border: 1px solid #aaa;
     border-radius: 5px;
@@ -111,7 +115,7 @@ article span {
     margin: 0px 13px;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
-.select-date:hover {
+.square-button:hover {
     background-color: #e0e0e0;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 }
@@ -137,4 +141,14 @@ article span {
     cursor: pointer; /* 마우스 오버 시 커서 변경 */
     user-select: none; /* 텍스트 선택 방지 */
     width: 80px;
+}
+
+nav {
+    position: relative;
+}
+
+#bottom-nav {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }

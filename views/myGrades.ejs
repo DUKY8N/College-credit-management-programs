@@ -9,12 +9,12 @@
 <body>
     <div class="container">
         <nav>
-            <h1>학점 관리 시스템</h1>
-            <ul>
+            <h1>내 학점 비서</h1>
+            <ul id="top-nav">
                 <li id="selected-nav-list"><a href="#">내 학점 목록</a></li>
                 <li><a href="#">내 친구 목록</a></li>
             </ul>
-            <ul>
+            <ul id="bottom-nav">
                 <li><a href="#">회원 수정</a></li>
                 <li><a href="#">로그아웃</a></li>
             </ul>
@@ -23,9 +23,10 @@
             <section id="my-score">
                 <div class="content-title">
                     <div>
-                        <button class="select-date" id="previous"><</button>
+                        <button class="square-button" id="previous"><</button>
                         2023년도 2학기 성적
-                        <button class="select-date" id="subsequent">></button>
+                        <button class="square-button" id="subsequent">></button>
+                        <button class="square-button" id="add">+</button>
                     </div>
                     <div class="label">
                         <p>과목 코드</p>
@@ -48,7 +49,16 @@
                 </div>
             </section>
             <section id="graduation-requirements">
-                <div class="content-title">졸업 요건</div>
+                <div class="content-title">
+                    졸업 요건
+                    <div class="label">
+                        <p>과목 코드</p>
+                        <p>과목 명</p>
+                        <p>학점</p>
+                        <p>획득 등급</p>
+                        <p>이수 상태</p>
+                    </div>
+                </div>
                 <div class="content-body">
                     <article>lasldkfj</article>
                 </div>
