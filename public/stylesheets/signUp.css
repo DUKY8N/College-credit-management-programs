@@ -49,3 +49,13 @@ body {
     cursor: pointer;
     font-size: 14px; /* 크기 조정 */
 }
+
+#duplicate-check {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+    margin-left: 5px;
+    height: 42px;
+}

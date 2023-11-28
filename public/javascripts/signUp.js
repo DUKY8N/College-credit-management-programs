@@ -25,7 +25,7 @@ function validateForm() {
     return true;
 }
 
-function checkid() {
+function checkId() {
     var id = document.getElementById('id').value;
 
 

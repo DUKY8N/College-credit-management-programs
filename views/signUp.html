@@ -21,7 +21,7 @@
             <label for="id">아이디 (6~14자)</label>
             <div style="display: flex;">
             <input type="text" id="id" name="id" placeholder="아이디" minlength="6" maxlength="14">
-            <button type="button" onclick="checkid()" style="background-color: #4CAF50; color: white; border: none; padding: 0px; cursor: pointer; margin-left: 5px; height: 42px;">중복 확인</button>
+            <button type="button" onclick="checkId()" id="duplicate-check">중복 확인</button>
             </div>
             <span id="idError" style="color: red;"></span>
 
@@ -31,7 +31,7 @@
             <label for="confirmPassword">비밀번호 확인</label>
             <input type="password" id="confirmPassword" placeholder="비밀번호 확인">
 
-            <label for="password">졸업 목표 학점</label>
+            <label for="text">졸업 목표 학점</label>
             <input type="text" id="graduated_target_avg_score" placeholder="졸업 목표 학점">
             
             <button type="submit">가입하기</button>
