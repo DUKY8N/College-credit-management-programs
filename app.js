@@ -1,18 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const dotenv = require("dotenv");
+const session = require("express-session");
+const SQLiteStore = require("connect-sqlite3")(session);
+const passport = require("passport");
+const passportConfig = require("./passport"); // passport/index.js 폴더 임포트(index.js는 생략가능)
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var myGradesRouter = require('./routes/myGrades');
-var logInRouter = require('./routes/logIn');
-var signUpRouter = require('./routes/signUp');
-var accountSettingsRouter = require('./routes/accountSettings');
+const indexRouter = require('./routes/indexRouter');
 
-
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,13 +22,31 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+dotenv.config();
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET, // 세션 암호화 키
+    resave: false, // 세션 데이터가 수정되지 않으면 저장하지 않음
+    saveUninitialized: false, // 초기화되지 않은 세션은 저장하지 않음
+    store: new SQLiteStore({ db: "session.db", dir: "./session" }), // SQLite를 세션 저장소로 사용
+    cookie: { maxAge: 3600000 }, // 쿠키 유효 시간 설정 (1시간)
+  })
+);
+
+// passportConfig();
+// app.use(passport.authenticate("session"));
+
+app.use(function (req, res, next) {
+  var msgs = req.session.messages || [];
+  res.locals.messages = msgs;
+  res.locals.hasMessages = !!msgs.length;
+  req.session.messages = [];
+  next();
+});
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/myGrades', myGradesRouter); // myGradesRouter를 '/myGrades' 경로에 연결한다.
-app.use('/logIn', logInRouter);
-app.use('/signUp', signUpRouter);
-app.use('/accountSettings', accountSettingsRouter);
+// app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
