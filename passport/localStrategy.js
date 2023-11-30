@@ -1,7 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
-// const userModel = require("../model/userModel");
+const userModel = require("../model/usersModel");
 const createError = require("http-errors");
 
 module.exports = () => {

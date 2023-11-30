@@ -10,6 +10,7 @@ const passport = require("passport");
 const passportConfig = require("./passport"); // passport/index.js 폴더 임포트(index.js는 생략가능)
 
 const indexRouter = require('./routes/indexRouter');
+const usersRouter = require('./routes/usersRouter');
 
 const app = express();
 
@@ -34,8 +35,8 @@ app.use(
   })
 );
 
-// passportConfig();
-// app.use(passport.authenticate("session"));
+passportConfig();
+app.use(passport.authenticate("session"));
 
 app.use(function (req, res, next) {
   var msgs = req.session.messages || [];
@@ -46,7 +47,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-// app.use('/api/users', usersRouter);
+app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
