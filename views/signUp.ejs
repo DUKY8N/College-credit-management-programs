@@ -8,34 +8,27 @@
     <title>회원가입</title>
 </head>
 <body>
-    <div class="sign-up-box">
-        <button class="back-button" onclick="goBack()">뒤로 가기</button>
-        <h2>회원가입</h2>
-        <form>
-            <label for="student_id">학번</label>
-            <input type="text" pattern="[0-9]*" id="student_id" placeholder="학번">
-
-            <label for="student_id">이름</label>
-            <input type="text" id="name" placeholder="이름">
-
-            <label for="id">아이디 (6~14자)</label>
-            <div style="display: flex;">
-            <input type="text" id="id" name="id" placeholder="아이디" minlength="6" maxlength="14">
-            <button type="button" onclick="checkId()" id="duplicate-check">중복 확인</button>
-            </div>
-            <span id="idError" style="color: red;"></span>
-
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" placeholder="비밀번호">
-
-            <label for="confirmPassword">비밀번호 확인</label>
-            <input type="password" id="confirmPassword" placeholder="비밀번호 확인">
-
-            <label for="text">졸업 목표 학점</label>
-            <input type="text" id="graduated_target_avg_score" placeholder="졸업 목표 학점">
+    <div class="window">
+        <div class="title-bar">
+            <span class="title">Sign Up</span>
+        </div>
+        <div class="signup-container">
+            <form form class="signup-form">
+                <label for="username">학번</label>
+                <input type="text" id="username" name="username" placeholder="Username" required>
             
-            <button type="submit">가입하기</button>
-        </form>
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            
+                <label for="confirmPassword">비밀번호 확인</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+            
+                <button type="submit">Sign Up</button>
+            </form>
+            <div class="login-link">
+                <a href="#">Already have an account? Login</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
