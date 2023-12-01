@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페이지 레이아웃</title>
+    <link rel="stylesheet" href="stylesheets/myFriends.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h1>내 학점 비서</h1>
+            <ul id="top-nav">
+                <li><a href="#">내 학점 목록</a></li>
+                <li id="selected-nav-list"><a href="#">내 친구 목록</a></li>
+            </ul>
+            <ul id="bottom-nav">
+                <li><a href="#">회원 수정</a></li>
+                <li><a href="#">로그아웃</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <section id="my-friends">
+                <div class="content-title">
+                    <div>
+                        친구 목록
+                        <button class="square-button" id="add">+</button>
+                    </div>
+                </div>
+                <div class="content-body">
+                    <% articles.forEach(function(article) { %>
+                        <article>
+                            <p>학번<%= article.content %></p>
+                            <p>이름<%= article.content %></p>
+                            <button class="edit-button">방문</button>
+                        </article>
+                    <% }); %>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

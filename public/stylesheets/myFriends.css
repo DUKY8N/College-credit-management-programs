@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+ul, ol { list-style: none; }
+a { text-decoration: none }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+nav {
+    width: 300px;
+    background-color: #dee3eb;
+    height: 100%;
+    overflow-y: auto; /* 스크롤 가능하게 하려면 이 줄을 제거하세요 */
+}
+nav a {
+    color: #15212c;
+}
+#selected-nav-list {
+    background-color: #2b9ce1;
+}
+#selected-nav-list a {
+    color: #f2fcfe;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: column;
+}
+nav ul li {
+    padding: 15px 0px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+}
+nav ul li:first-child {
+    border-top: 1px solid #ccc;
+}
+nav h1 {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0px;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    padding: 5%;
+    background-color: #f7f7f7;
+    justify-content: center;
+    align-content: center;
+}
+
+section {
+    /* border-bottom: 1px solid #ccc; */
+    background-color: #ffffff;
+    margin: 10px;
+    overflow-y: scroll;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+article {
+    padding: 12px 0px;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+}
+article:nth-child(odd) {
+    background-color: #edf3fe;
+}
+article > * {
+    display: block;
+}
+
+.content-title {
+    padding: 18px 0px;
+    background-color: #f0ebed;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+
+.square-button {
+    padding: 5px 10px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    cursor: pointer;
+    margin: 0px 13px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.square-button:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.edit-button {
+    padding: 5px 10px;
+    margin: auto;
+    border: 1px solid #aaa; /* 경계선 */
+    border-radius: 10px; /* 둥근 모서리 */
+    background-image: linear-gradient(to bottom, #fff, #eee); /* 그라데이션 배경 */
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    text-align: center;
+    color: #333; /* 텍스트 색상 */
+    font-size: 12px; /* 텍스트 크기 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    user-select: none; /* 텍스트 선택 방지 */
+    width: 80px;
+}
+
+nav {
+    position: relative;
+}
+
+#bottom-nav {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+#my-friends {
+    width: 50%;
+}

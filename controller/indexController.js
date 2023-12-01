@@ -9,6 +9,15 @@ exports.getMyGradesPage = async (req, res, next) => {
     res.render('myGrades', { articles: articles }); 
 };
 
+exports.getMyFriendsPage = async (req, res, next) => {
+    const articles = [];
+    for (let i = 1; i <= 18; i++) {
+        articles.push({ content: '내용 ' + i });
+    }
+
+    res.render('myFriends', { articles: articles }); 
+};
+
 exports.getLogInPage = async (req, res, next) => {
     res.render('logIn');
 };
