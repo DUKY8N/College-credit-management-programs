@@ -1,64 +1,74 @@
-* {margin: 0; padding: 0; box-sizing: border-box;}
 body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #d8d8d8;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: white;
-  background-size: cover; /* 디스플레이가 유동적이라 그에맞게 사이즈가 변환되게 하려고 적음 */
-}
-body::before{
-  content: "";
-  position: absolute; z-index: 1;
-  top: 0; right: 0; bottom: 0; left: 0;
-} /*z-index를 사용하여 혹시 화면 겹치게 할때 안겹치기위해 사용한것 백그라운드에 이미지를 넣어도 잘출력*/
-
-.login-form {position: relative; z-index: 2;}
-.login-form h1 {font-size: 32px; color:black; text-align: center; margin-bottom: 50px;}/*로그인 큰글자 조정*/
-
-.int-area {width: 400px; position: relative; margin-top: 20px;}
-.int-area:first-child {margin-top: 0;}
-.int-area input{
-  width: 100%;
-  padding: 20px 10px 10px;
-  background-color: white; /*입력칸 색상*/
-  border-radius: 15px;
-  border-bottom: 1px solid black; /*입력칸 테두리 색상*/
-  font-size: 18px; color: black;
-  outline: none;
-}
-.int-area label {
-  position: absolute; left: 10px; top: 15px;
-  font-size: 18px; color: black;
-  transition: all .5s ease; /*입력하면 움직이는효과주는것*/
+  margin: 0;
 }
 
-.int-area input:focus + label,
-.int-area input:valid + label {
-  top:0;
-  font-size: 13px; color: black;
-} /*아이디 패스워드 글자 위로 배치하는것*/
+.window {
+  background: white;
+  width: 300px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
 
-.btn-area {margin-top: 20px;}
-.btn-area button {
-  width: 100px; height: 40px;
-  background-color: skyblue;
-  color:#fff;
-  font-size: 15px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  margin-right: 10px;
-  float:right;
-} /*로그인이랑 회원가입 버튼 */
-
-.caption {
-  margin-top: 80px;
+.title-bar {
+  background: #f6f6f6;
+  padding: 6px 10px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #ccc;
   text-align: center;
-  margin-left: 200px;
-} /*아이디/패스워드 위치*/
+}
 
-.caption a {
-  font-size: 15px; color: #999;
+.title {
+  font-weight: bold;
+  color: #333;
+}
+
+.login-container {
+  padding: 20px;
+}
+
+.login-form input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 4px;
+  background: #007aff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background: #0056b3;
+}
+
+.signup-link {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.signup-link a {
+  color: #007aff;
   text-decoration: none;
-} /*아이디 패스워드 디자인*/
+  font-size: 14px;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}

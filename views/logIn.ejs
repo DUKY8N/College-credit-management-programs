@@ -7,28 +7,20 @@
     <link rel="stylesheet" href="stylesheets/logIn.css">
 </head>
 <body>
-    <section class="login-form">
-      <h1>로그인</h1>
-      <from action="">
-        <div class="int-area">
-          <input type="text" name="id" id="id"
-          autocomplete="off" required>
-          <label for="id">아이디</label>
-        </div>
-        <div class="int-area">
-          <input type="password" name="pw" id="pw" 
-          autocomplete="off" required> 
-          <label for="pw">패스워드</label>
-        </div>
-        <div class="btn-area">
-          <button id="btn1" type="submit">회원가입</button>
-          <button id="btn" type="submit">로그인</button>
-        </div>
-      </from>
-      <div class="caption">
-        <a href="">아이디/패스워드 찾기</a>
+  <div class="window">
+      <div class="title-bar">
+          <span class="title">내 학점 비서</span>
       </div>
-    </section>
-
+      <div class="login-container">
+          <form class="login-form">
+              <input type="text" placeholder="Username" name="username" required>
+              <input type="password" placeholder="Password" name="password" required>
+              <button type="submit">Login</button>
+          </form>
+          <div class="signup-link">
+            <a href="register.html">Sign Up</a>
+          </div>
+      </div>
+  </div>
 </body>
 </html>
