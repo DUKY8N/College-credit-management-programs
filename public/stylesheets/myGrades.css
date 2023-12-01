@@ -56,15 +56,16 @@ nav h1 {
 
 .content {
     width: 100%;
-    display: flex;
-    padding: 5% 4%;
+    display: grid;
+    padding: 5%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 3fr 1fr;
     background-color: #f7f7f7;
 }
 
 section {
     /* border-bottom: 1px solid #ccc; */
     background-color: #ffffff;
-    width: 50%;
     margin: 10px;
     overflow-y: scroll;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -123,7 +124,7 @@ article span {
 .label {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(5, 1fr);
     margin-top: 30px;
     text-align: center;
 }
@@ -151,4 +152,20 @@ nav {
     position: absolute;
     bottom: 0px;
     width: 100%;
+}
+#test {
+    background-color: #2b9ce1;
+    color: #f2fcfe;
+    grid-column: 2 / 2;
+    grid-row: 2 / 2;
+}
+
+#graduation-requirements {
+    grid-column: 2 / 2;
+    grid-row: 1 / 1;
+}
+
+#my-score {
+    grid-column: 1 / 1;
+    grid-row: 1 / -1;
 }
