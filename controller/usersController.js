@@ -37,7 +37,7 @@ exports.signUp = async function (req, res, next) {
 exports.idCheck = async function (req, res, next) {
     try {
         if (req.body.id === undefined) return next(createError(400, "Missing required fields"));
-        if (await usersModel.checkIdDuplication) return res.status(409).json({ message: "ID already exists" });
+        if (await usersModel.checkIdDuplication(req.body.id)) return res.status(409).json({ message: "ID already exists" });
 
         return res.status(200).json({ message: "This ID is valid. ID available" });
     } catch (error) {

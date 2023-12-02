@@ -5,22 +5,18 @@ const userModel = require("../model/usersModel");
 const createError = require("http-errors");
 
 module.exports = () => {
-  passport.use(
-    new LocalStrategy(async function verify(username, password, cb) {
-      try {
-        const user = await userModel.getUserById(username);
-        if (user.length > 0) {
-          if (await bcrypt.compare(password, user[0].password)) {
-            return cb(null, user[0]);
-          }
+  passport.use(new LocalStrategy(async (username, password, cb) => {
+    try {
+      const users = await userModel.getUserById(username);
 
-          return cb(null, false, createError(401, "not_match_password_error"));
-        }
+      if (users.length === 0) return cb(null, false, createError(401, "not_found_id_error"));
 
-        return cb(null, false, createError(401, "not_found_id_error"));
-      } catch (err) {
-        cb(err);
-      }
-    })
-  );
+      const user = users[0];
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordValid) return cb(null, false, createError(401, "not_match_password_error"));
+
+      return cb(null, user);
+    } catch (err) { cb(err); }
+  }));
 };

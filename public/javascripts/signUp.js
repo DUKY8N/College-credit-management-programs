@@ -2,37 +2,40 @@ function goBack() {
     window.history.back();
 }
 
-function validateForm() {
-    var student_id = document.getElementById('student_id').value;
+async function signUp() {
     var id = document.getElementById('id').value;
-    var name = document.getElementById('name').value;
+    var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('confirmPassword').value;
-
-    // 학번은 숫자만 입력 가능
-    if (!/^\d+$/.test(student_id)) {
-        alert("학번은 숫자만 입력 가능합니다.");
-        return false;
+    var checkedPassword = document.getElementById('checkedPassword').value;
+    
+    // 비밀번호 확인
+    if (password !== checkedPassword) {
+        alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+        return;
     }
 
-    // 아이디는 6~14자
-    if (id.length < 6 || id.length > 14) {
-        alert("아이디는 6~14자여야 합니다.");
-        return false;
-    }
+    try {
+        const response = await fetch('http://localhost:3000/api/users/signUp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id,
+                password,
+                checkedPassword,
+                username
+            }),
+        });
 
+        if (!response.ok) {
+            const errorData = await response.json();
+            return alert(errorData.message || '회원가입에 실패했습니다.');
+        }
 
-    return true;
-}
-
-function checkId() {
-    var id = document.getElementById('id').value;
-
-
-    if (id === 'existing_id') {
-        document.getElementById('idError').innerText = '이미 사용 중인 아이디입니다.';
-    } else {
-        document.getElementById('idError').innerText = '';
-        alert('사용 가능한 아이디입니다.');
+        alert('회원가입이 완료되었습니다.');
+        window.location.href = '/logIn'; // 로그인 페이지 URL로 변경
+    } catch (error) {
+        alert(error.message);
     }
 }
