@@ -5,27 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylesheets/accountSettings.css">
     <script src="javascripts/accountSettings.js"></script>
-    <title>회원 수정</title>
+    <title>계정 관리</title>
 </head>
 <body>
-    <div class="update-box">
-        <button class="back-button" onclick="goBack()">뒤로 가기</button>
-        <h2>회원 수정</h2>
-        <form onsubmit="return updateInfo()">
-            <label for="studentID">학번</label>
-            <input type="text" id="studentID" name="student_id" placeholder="학번" readonly>
-
-            <label for="name">이름</label>
-            <input type="text" id="name" name="name" placeholder="이름" readonly>
-
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" placeholder="비밀번호" required>
-
-            <label for="password">졸업 목표 학점</label>
-            <input type="text" id="graduated_target_avg_score" placeholder="졸업 목표 학점">
-
-            <button type="submit">정보 수정</button>
-        </form>
+    <div class="window">
+        <div class="title-bar">
+            <span class="title">계정 관리</span>
+        </div>
+        <div class="signup-container">
+            <form form class="signup-form">
+                <label for="username">이름</label>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            
+                <label for="confirmPassword">비밀번호 확인</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+            
+                <button type="/myGrades">계정 수정하기</button>
+            </form>
+            <div class="login-link">
+                <a href="/myGrades">뒤로가기</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
