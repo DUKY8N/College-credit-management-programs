@@ -44,3 +44,41 @@ exports.idCheck = async function (req, res, next) {
         next(error);
     }
 }
+
+//로그인 
+exports.logIn = function (req, res, next) {
+  //username과 password 누락 확인
+  if (!req.body.username || !req.body.password) {
+    return next(createError(400, "Missing required fields"));
+  }
+  //passport로 로그인 시도
+  passport.authenticate("local", function (err, user, userError) {
+    //에러
+    if (err) {
+      console.error(err);
+      return next(createError(500, "login_error"));
+    }
+
+    if (!user) {
+      return next(userError);
+    }
+
+    return req.login(user, (err) => {
+      if (err) {
+        console.error(err);
+        return next(createError(500, "login_error"));
+      }
+      //인증성공시 상태코드 및 메시지 전송
+      res.status(201).json({ message: "Login successful!" });
+    });
+  })(req, res, next);
+};
+//로그아웃
+exports.logOut = function (req, res, next) {
+  req.logOut(function (err) {
+    if (err) {
+      return next(createError(500, "logout_error"));
+    }
+    return res.status(201).json({ message: "Logout successful!" });
+  });
+};
