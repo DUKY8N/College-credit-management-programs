@@ -4,7 +4,7 @@ const local = require("./localStrategy");
 module.exports = () => {
   passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
-      cb(null, user.user_id); // sessiond에 user.id 저장
+      cb(null, user.user_id); // session에 user.id 저장
     });
   });
 
