@@ -8,6 +8,12 @@ async function signUp() {
     var password = document.getElementById('password').value;
     var checkedPassword = document.getElementById('checkedPassword').value;
     
+    // 학번인지 확인
+    if (id.length !== 10) {
+        alert('학번을 확인해주세요.')
+        return;
+    }
+
     // 비밀번호 확인
     if (password !== checkedPassword) {
         alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
