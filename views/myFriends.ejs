@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>페이지 레이아웃</title>
     <link rel="stylesheet" href="stylesheets/myFriends.css">
+    <script src="javascripts/logOut.js"></script>
 </head>
 <body>
     <div class="container">
@@ -15,8 +16,8 @@
                 <li id="selected-nav-list"><a href="/myFriends">내 친구 목록</a></li>
             </ul>
             <ul id="bottom-nav">
-                <li><a href="/accountSettings">회원 수정</a></li>
-                <li><a href="/login">로그아웃</a></li>
+                <li><a href="/accountSettings">계정 관리</a></li>
+                <li><a onclick="logout()">로그아웃</a></li>
             </ul>
         </nav>
         <div class="content">
