@@ -82,3 +82,33 @@ exports.logOut = function (req, res, next) {
     return res.status(201).json({ message: "Logout successful!" });
   });
 };
+
+//회원정보 수정
+exports.modifyUserInfo = async function (req, res, next) {
+  const { password, confirmPassword, username } = req.body;
+  if (!password && !username) { return next(createError(400, "Missing required fields")); }
+
+  if (password) {
+    if (password !== confirmPassword) {
+      return next(createError(422, "Passwords do not match"));
+      console.log("Passwords do not match")
+    }
+    if (password.length <= 0) {
+      return next(createError(422, "Password must be at least 0 characters long"));
+      console.log("Password must be at least 0 characters long")
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12); // 비밀번호 해싱 (비동기 함수)
+    await usersModel.changePassword(req.user, hashedPassword);
+  }
+  if (username) {
+    if (username.length <= 0) {
+      return next(createError(422, "Username must be at least 0 characters long"));
+      console.log("Username must be at least 0 characters long")
+    }
+    await usersModel.changeName(req.user, username);
+    res.status(200).json({ message: "User info updated successfully" });
+  }
+}
+
+//TODO: 회원탈퇴

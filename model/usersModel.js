@@ -22,3 +22,15 @@ exports.checkIdDuplication = async function (id) {
   if (recordset.length > 0) return true;
   return false;
 };
+
+exports.changePassword = async function (id, newPassword) {
+  const pool = await poolPromise;
+  await pool.query`UPDATE Student SET password = ${newPassword} WHERE student_id = ${id}`;
+};
+
+exports.changeName = async function (id, newName) {
+  const pool = await poolPromise;
+  await pool.query`UPDATE Student SET name = ${newName} WHERE student_id = ${id}`;
+}
+
+// TODO: 회원 탈퇴 기능 구현
