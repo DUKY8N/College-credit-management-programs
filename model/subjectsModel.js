@@ -5,10 +5,10 @@ exports.addScore = async function (userScore) {
     const { subject_code, academic_credit, subject_name, grade, student_id, date } = userScore;
     const pool = await poolPromise;
     await pool.query`INSERT INTO Score
-                        VALUES (${subject_code}, ${academic_credit}, N${subject_name}, ${grade}, ${student_id}, ${date});`;       
+                        VALUES (${subject_code}, ${academic_credit}, ${subject_name}, ${grade}, ${student_id}, ${date});`;       
 };
 
-//성적수정 (보류)
+//성적수정
 exports.changeScore = async function (id, newPassword) {
     const pool = await poolPromise;
     await pool.query`UPDATE Score SET grade = ${newPassword} WHERE subject_code = ${id}`;
@@ -61,6 +61,7 @@ exports.sortScoreAsc = async function () {
 };
 
 //들은과목수확인(보류)
+//? 과연 이게 필요할까요?
 exports.sortScoreAsc = async function () {
     const pool = await poolPromise;
     const { recordset } =
