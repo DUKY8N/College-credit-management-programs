@@ -31,7 +31,7 @@ exports.changeScore = async function (req, res, next) {
 //평균학점 계산 컨트롤러
 exports.avgScore = async function (req, res, next) {
   try {
-    const { student_id } = req.params;
+    const { student_id } = req.body;
 
     const avgScore = await subjectsModel.avgScore(student_id);
 
@@ -51,7 +51,7 @@ exports.avgScore = async function (req, res, next) {
 //졸업요건비교 컨트롤러
 exports.Graduated = async function (req, res, next) {
   try {
-    const { studentId } = req.params;
+    const { studentId } = req.body;
 
     const graduationRequirements = await subjectsModel.Graduated(studentId);
 
@@ -68,7 +68,7 @@ exports.Graduated = async function (req, res, next) {
 //학기별성적보기 컨트롤러
 exports.dateScore = async function (req, res, next) {
   try {
-    const { date, id } = req.params;
+    const { date, id } = req.body;
 
     const semesterScores = await subjectsModel.dateScore(date, id);
 
