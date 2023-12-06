@@ -11,6 +11,7 @@ const passportConfig = require("./passport"); // passport/index.js 폴더 임포
 
 const indexRouter = require('./routes/indexRouter');
 const usersRouter = require('./routes/usersRouter');
+const subjectsRouter = require('./routes/subjectsRouter');
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use(function (req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/subjects', subjectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

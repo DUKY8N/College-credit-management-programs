@@ -31,7 +31,7 @@ exports.signUp = async function (req, res, next) {
     } catch (error) {
       next(error);
     }
-  };
+};
 
 
 exports.idCheck = async function (req, res, next) {
