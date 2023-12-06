@@ -10,16 +10,17 @@ exports.addScore = async function (userScore) {
 };
 
 //성적수정
-exports.changeScore = async function (subject_code, newGrade) {
+exports.changeScore = async function (newGrade, subject_code, student_id) {
     const pool = await poolPromise;
-    await pool.query`UPDATE Score SET grade = ${newGrade} WHERE subject_code = ${subject_code}`;
+    await pool.query`UPDATE Score SET grade = ${newGrade} WHERE subject_code = ${subject_code} AND student_id = ${student_id};`;
 };
 
 //평균학점
 exports.avgScore = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
-      await pool.query`SELECT ROUND(SUM(academic_credit * grade) / SUM(academic_credit), 2) AS averageScore FROM Score WHERE student_id = ${id}`;
+      await pool.query`SELECT ROUND(SUM(academic_credit * grade) / SUM(academic_credit), 2) AS averageScore FROM Score WHERE student_id = ${id};`;
+      console.log('Model recordset:', recordset);
     return recordset;
 };
 

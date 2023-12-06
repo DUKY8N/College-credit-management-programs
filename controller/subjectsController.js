@@ -18,9 +18,9 @@ exports.addScore = async function (req, res, next) {
 //성적수정 컨트롤러
 exports.changeScore = async function (req, res, next) {
     try {
-      const { subject_code, newGrade } = req.body;
+      const { newGrade, subject_code, student_id } = req.body;
   
-      await subjectsModel.changeScore(subject_code, newGrade);
+      await subjectsModel.changeScore(newGrade, subject_code, student_id);
   
       res.status(200).json({ success: true, message: 'Score updated successfully' });
     } catch (error) {
@@ -31,12 +31,15 @@ exports.changeScore = async function (req, res, next) {
 //평균학점 계산 컨트롤러
 exports.avgScore = async function (req, res, next) {
   try {
-    const { studentId } = req.params;
+    const { student_id } = req.params;
 
-    const averageScore = await subjectsModel.avgScore(studentId);
+    const avgScore = await subjectsModel.avgScore(student_id);
 
-    if (averageScore) {
-      res.status(200).json({ success: true, averageScore });
+    console.log('Average Score from Model:', avgScore);
+
+    if (avgScore && avgScore.length > 0) {
+      const avgScore = avgScore[0] && avgScore[0].avgScore;
+      res.status(200).json({ success: true, avgScore: avgScore });
     } else {
       res.status(404).json({ success: false, message: 'Average score not found' });
     }
