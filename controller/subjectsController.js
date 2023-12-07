@@ -16,6 +16,7 @@ exports.addScore = async function (req, res, next) {
 };
 
 //성적수정 컨트롤러
+//! 해당 과목 코드까지 불러오기
 exports.changeScore = async function (req, res, next) {
     try {
       const { newGrade, subject_code, student_id } = req.body;
@@ -31,15 +32,10 @@ exports.changeScore = async function (req, res, next) {
 //평균학점 계산 컨트롤러
 exports.avgScore = async function (req, res, next) {
   try {
-    const { student_id } = req.body;
+    const averageScore = await subjectsModel.avgScore(req.user);
 
-    const avgScore = await subjectsModel.avgScore(student_id);
-
-    console.log('Average Score from Model:', avgScore);
-
-    if (avgScore && avgScore.length > 0) {
-      const avgScore = avgScore[0] && avgScore[0].avgScore;
-      res.status(200).json({ success: true, avgScore: avgScore });
+    if (averageScore) {
+      res.status(200).json({ success: true, averageScore });
     } else {
       res.status(404).json({ success: false, message: 'Average score not found' });
     }
@@ -51,14 +47,14 @@ exports.avgScore = async function (req, res, next) {
 //졸업요건비교 컨트롤러
 exports.Graduated = async function (req, res, next) {
   try {
-    const { studentId } = req.body;
+    const { subject_code } = req.body;
 
-    const graduationRequirements = await subjectsModel.Graduated(studentId);
+    const result = await subjectsModel.Graduated(user.name, subject_code);
 
-    if (graduationRequirements !== null) {
-      res.status(200).json({ success: true, graduationRequirements });
+    if (result && result.length > 0) {
+      res.status(200).json({ success: true, message: 'Subject codes match', result });
     } else {
-      res.status(404).json({ success: false, message: 'Graduation requirements not found' });
+      res.status(404).json({ success: false, message: 'Subject codes do not match' });
     }
   } catch (error) {
     next(error);
@@ -68,24 +64,40 @@ exports.Graduated = async function (req, res, next) {
 //학기별성적보기 컨트롤러
 exports.dateScore = async function (req, res, next) {
   try {
-    const { date, id } = req.body;
+    const { date } = req.body;
 
-    const semesterScores = await subjectsModel.dateScore(date, id);
+    const dateScores = await subjectsModel.dateScore(date, req.user);
 
-    if (semesterScores && semesterScores.length > 0) {
-      res.status(200).json({ success: true, semesterScores });
+    if (dateScores && dateScores.length > 0) {
+      res.status(200).json({ success: true, dateScores });
     } else {
-      res.status(200).json({ success: true, semesterScores: [] });
+      res.status(404).json({ success: false, message: 'No scores found for the given date and student ID' });
     }
   } catch (error) {
     next(error);
   }
 };
 
-//성적정렬 컨트롤러(오름차순)
-exports.sortScoreAsc = async function (req, res, next) {
+//성적정렬 컨트롤러
+exports.sortScores = async function (req, res, next) {
   try {
-    const sortedScores = await subjectsModel.sortScoreAsc();
+    const { order } = req.body;
+    let sortedScores;
+
+    switch (order) {
+      case 'asc':
+        sortedScores = await subjectsModel.sortScoreAsc(req.user);
+        break;
+      case 'desc':
+        sortedScores = await subjectsModel.sortScoreDesc(req.user);
+        break;
+      case 'original':
+        sortedScores = await subjectsModel.sortScoreOriginal(req.user);
+        break;
+      default:
+        res.status(400).json({ success: false, message: 'Invalid order parameter' });
+        return;
+    }
 
     if (sortedScores && sortedScores.length > 0) {
       res.status(200).json({ success: true, sortedScores });
@@ -97,15 +109,15 @@ exports.sortScoreAsc = async function (req, res, next) {
   }
 };
 
-//성적정렬 컨트롤러(내림차순)
-exports.sortScoreDesc = async function (req, res, next) {
+//들은과목 수 확인
+exports.listenSubject = async function (req, res, next) {
   try {
-    const sortedScores = await subjectsModel.sortScoreDesc();
+    const result = await subjectsModel.listenSubject(req.user);
 
-    if (sortedScores && sortedScores.length > 0) {
-      res.status(200).json({ success: true, sortedScores });
+    if (result && result.length > 0) {
+      res.status(200).json({ success: true, message: 'Student scores exist', result });
     } else {
-      res.status(404).json({ success: false, message: 'Sorted scores not found' });
+      res.status(404).json({ success: false, message: 'Student scores not found' });
     }
   } catch (error) {
     next(error);

@@ -27,46 +27,50 @@ exports.avgScore = async function (id) {
 //졸업요건비교
 exports.Graduated = async function (id) {
     const pool = await poolPromise;
-    const { recordset } =
-      await pool.query`SELECT COALESCE(score.subject_code, graduated.subject_code) AS subject_code,
-                              COALESCE(score.subject_name, graduated.subject_name) AS subject_name,
-                              score.academic_credit,
-                              score.grade
-                       FROM Score 
-                       INNER JOIN graduated ON score.subject_code = graduated.subject_code
-                       WHERE student_id = ${id}`;
-    return recordset.length > 0 ? recordset : null;
+    const { recordset } = await pool.query` SELECT Score.subject_code
+                                            FROM Score
+                                            INNER JOIN graduated ON Score.subject_code = graduated.subject_code
+                                            WHERE Score.student_id = ${id};`;
+    return recordset;
 };
 
 //학기별 성적보기
 exports.dateScore = async function (date, id) {
     const pool = await poolPromise;
     const { recordset } =
-      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE date = ${date} AND student_id = ${id}`;
+      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE date = ${date} AND student_id = ${id};`;
     return recordset;
 };
 
 //성적정렬(오름차순)
-exports.sortScoreAsc = async function () {
+exports.sortScoreAsc = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
-      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score ORDER BY grade;`;
+      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} ORDER BY grade;`;
     return recordset;
 };
 
 //성적정렬(내림차순)
-exports.sortScoreDesc = async function () {
+exports.sortScoreDesc = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
-      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score ORDER BY grade DESC;`;
+      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} ORDER BY grade DESC;`;
     return recordset;
+};
+
+//성적정렬(원래대로)
+exports.sortScoreOriginal = async function (id) {
+  const pool = await poolPromise;
+  const { recordset } =
+    await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id};`;
+  return recordset;
 };
 
 //들은과목수확인(보류)
 //? 과연 이게 필요할까요?
-exports.listenSubject = async function () {
+exports.listenSubject = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
-      await pool.query`SELECT COUNT(*) as student_id FROM Score GROUP BY student_id;`;
+      await pool.query`SELECT COUNT(*) as student_id FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
     return recordset;
 };
