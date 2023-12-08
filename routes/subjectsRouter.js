@@ -18,11 +18,13 @@ router.post("/Graduated", authMiddleware.isLoginStatus, subjectsController.Gradu
 //*학기별성적보기 (테스트완료)
 router.post("/dateScore", authMiddleware.isLoginStatus, subjectsController.dateScore);
 
-//성적정렬
-//! 테스트 실패
+//* 성적정렬 (테스트완료)
 router.post("/sortScores/:order", authMiddleware.isLoginStatus, subjectsController.sortScores);
 
 //*들은과목수확인 (테스트완료)
 router.post("/listenSubject", authMiddleware.isLoginStatus, subjectsController.listenSubject);
+
+//*전공,비전공 필터링 (테스트완료)
+router.post("/filtering/:order", authMiddleware.isLoginStatus, subjectsController.filterScores);
 
 module.exports = router;

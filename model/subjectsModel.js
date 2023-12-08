@@ -59,18 +59,33 @@ exports.sortScoreDesc = async function (id) {
 };
 
 //성적정렬(원래대로)
-exports.sortScoreOriginal = async function (id) {
+exports.sortScoreDefault = async function (id) {
   const pool = await poolPromise;
   const { recordset } =
     await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id};`;
   return recordset;
 };
 
-//들은과목수확인(보류)
-//? 과연 이게 필요할까요?
+//들은과목수확인
 exports.listenSubject = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
       await pool.query`SELECT COUNT(*) as student_id FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
     return recordset;
+};
+
+//전공필터링
+exports.majorSubject = async function (id) {
+  const pool = await poolPromise;
+  const { recordset } =
+    await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} AND subject_code LIKE ('%COM%');`;
+  return recordset;
+};
+
+//비전공필터링
+exports.notmajorSubject = async function (id) {
+  const pool = await poolPromise;
+  const { recordset } =
+    await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} AND subject_code NOT LIKE ('%COM%');`;
+  return recordset;
 };

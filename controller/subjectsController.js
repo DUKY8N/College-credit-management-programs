@@ -16,7 +16,7 @@ exports.addScore = async function (req, res, next) {
 };
 
 //성적수정 컨트롤러
-//! 해당 과목 코드까지 불러오기
+//! 해당 과목 코드까지 불러오기 구현
 exports.changeScore = async function (req, res, next) {
     try {
       const { newGrade, subject_code, student_id } = req.body;
@@ -62,6 +62,7 @@ exports.Graduated = async function (req, res, next) {
 };
 
 //학기별성적보기 컨트롤러
+//! 해당 학기 불러오기 구현
 exports.dateScore = async function (req, res, next) {
   try {
     const { date } = req.body;
@@ -91,8 +92,8 @@ exports.sortScores = async function (req, res, next) {
       case 'desc':
         sortedScores = await subjectsModel.sortScoreDesc(req.user);
         break;
-      case 'original':
-        sortedScores = await subjectsModel.sortScoreOriginal(req.user);
+      case 'default':
+        sortedScores = await subjectsModel.sortScoreDefault(req.user);
         break;
       default:
         res.status(400).json({ success: false, message: 'Invalid order parameter' });
@@ -118,6 +119,37 @@ exports.listenSubject = async function (req, res, next) {
       res.status(200).json({ success: true, message: 'Student scores exist', result });
     } else {
       res.status(404).json({ success: false, message: 'Student scores not found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+//전공,비전공 필터링
+exports.filterScores = async function (req, res, next) {
+  try {
+    const { filter } = req.body;
+    let filteredScores;
+
+    switch (filter) {
+      case 'major':
+        filteredScores = await subjectsModel.majorSubject(req.user);
+        break;
+      case 'notmajor':
+        filteredScores = await subjectsModel.notmajorSubject(req.user);
+        break;
+      case 'default':
+        filteredScores = await subjectsModel.sortScoreDefault(req.user);
+        break;
+      default:
+        res.status(400).json({ success: false, message: '잘못된 필터입니다' });
+        return;
+    }
+
+    if (filteredScores && filteredScores.length > 0) {
+      res.status(200).json({ success: true, filteredScores });
+    } else {
+      res.status(404).json({ success: false, message: '필터된 성적이 없습니다' });
     }
   } catch (error) {
     next(error);
