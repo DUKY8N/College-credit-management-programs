@@ -49,7 +49,7 @@ exports.Graduated = async function (req, res, next) {
   try {
     const { subject_code } = req.body;
 
-    const result = await subjectsModel.Graduated(user.name, subject_code);
+    const result = await subjectsModel.Graduated(req.user, subject_code);
 
     if (result && result.length > 0) {
       res.status(200).json({ success: true, message: 'Subject codes match', result });
@@ -107,6 +107,24 @@ exports.filterAndSortScores = async function (req, res, next) {
     } else {
       res.status(404).json({ success: false, message: 'No scores found' });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteScore = async function (req, res, next) {
+  try {
+    const { subject_code } = req.body;
+
+    const deleteScore = await subjectsModel.checkScoreExists(req.user, subject_code);
+    
+    if (!deleteScore) {
+      res.status(404).json({ success: false, message: 'Score not found or already deleted' });
+      return;
+    }
+
+    await subjectsModel.deleteScore(req.user, subject_code);
+    res.status(200).json({ success: true, message: 'Score successfully deleted' });
   } catch (error) {
     next(error);
   }

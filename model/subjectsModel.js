@@ -87,3 +87,10 @@ exports.filterAndSortScores = async function (id, filter, sort, order) {
   const { recordset } = await pool.query(query);
   return recordset;
 };
+
+//성적삭제
+exports.checkScoreExists = async function (id, subject_code) {
+  const pool = await poolPromise;
+  const result = await pool.query`SELECT COUNT(1) FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
+  return result.recordset[0][''] > 0;
+};
