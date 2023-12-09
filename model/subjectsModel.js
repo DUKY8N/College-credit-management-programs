@@ -42,30 +42,6 @@ exports.dateScore = async function (date, id) {
     return recordset;
 };
 
-//성적정렬(오름차순)
-exports.sortScoreAsc = async function (id) {
-    const pool = await poolPromise;
-    const { recordset } =
-      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} ORDER BY grade;`;
-    return recordset;
-};
-
-//성적정렬(내림차순)
-exports.sortScoreDesc = async function (id) {
-    const pool = await poolPromise;
-    const { recordset } =
-      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} ORDER BY grade DESC;`;
-    return recordset;
-};
-
-//성적정렬(원래대로)
-exports.sortScoreDefault = async function (id) {
-  const pool = await poolPromise;
-  const { recordset } =
-    await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id};`;
-  return recordset;
-};
-
 //들은과목수확인
 exports.listenSubject = async function (id) {
     const pool = await poolPromise;
@@ -74,18 +50,40 @@ exports.listenSubject = async function (id) {
     return recordset;
 };
 
-//전공필터링
-exports.majorSubject = async function (id) {
+//통합정렬
+exports.filterAndSortScores = async function (id, filter, sort, order) {
   const pool = await poolPromise;
-  const { recordset } =
-    await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} AND subject_code LIKE ('%COM%');`;
-  return recordset;
-};
+  let query = `SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id}`;
 
-//비전공필터링
-exports.notmajorSubject = async function (id) {
-  const pool = await poolPromise;
-  const { recordset } =
-    await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id} AND subject_code NOT LIKE ('%COM%');`;
+  if (filter === 'major') {
+    query += ` AND subject_code LIKE ('%COM%')`;
+  } else if (filter === 'notmajor') {
+    query += ` AND subject_code NOT LIKE ('%COM%')`;
+  }
+
+  switch(sort) {
+    case 'grade':
+      query += ` ORDER BY grade`;
+      break;
+    case 'subject_name':
+      query += ` ORDER BY subject_name`;
+      break;
+    case 'subject_code':
+      query += ` ORDER BY subject_code`;
+      break;
+    case 'academic_credit':
+      query += ` ORDER BY academic_credit`;
+      break;
+    default:
+      query += ` ORDER BY grade`;
+  }
+
+  if (order === 'desc') {
+    query += ` DESC`;
+  } else {
+    query += ` ASC`;
+  }
+
+  const { recordset } = await pool.query(query);
   return recordset;
 };
