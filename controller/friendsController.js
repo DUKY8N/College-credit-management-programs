@@ -2,7 +2,7 @@ const createError = require("http-errors");
 const friendsModel = require("../model/friendsModel");
 const bcrypt = require("bcrypt");
 
-
+//친구 추가
 exports.addFriend = async function (req,res,next) {
   try{
     //필수 입력 필드 검사
@@ -12,14 +12,14 @@ exports.addFriend = async function (req,res,next) {
       return next(createError(400, "Missing required fields"));
     }
 
-    //친구 추가
+    
     await friendsModel.addFriend({id});
     return res.status(201).json({ message: "Add Friend!" });
   }catch (error) {
     next(error);
   }
 };
-
+//친구 삭제
 exports.deleteFriend = async function (req,res,next) {
   try{
     //필수 입력 필드 검사
@@ -29,14 +29,14 @@ exports.deleteFriend = async function (req,res,next) {
       return next(createError(400, "Missing required fields"));
     }
 
-    //친구 삭제
+    
     await friendsModel.deleteFriend({f_id});
     return res.status(200).json({ message: "Delete Friend!" });
   }catch (error) {
     next(error);
   }
 };
-
+//성적비교
 exports.compareScore = async function (req,res,next) {
   try{
     //필수 입력 필드 검사
