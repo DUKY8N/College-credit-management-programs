@@ -10,9 +10,9 @@ exports.addScore = async function (userScore) {
 };
 
 //성적수정
-exports.changeScore = async function (newGrade, subject_code, student_id) {
+exports.changeScore = async function (newGrade, subject_code, id) {
     const pool = await poolPromise;
-    await pool.query`UPDATE Score SET grade = ${newGrade} WHERE subject_code = ${subject_code} AND student_id = ${student_id};`;
+    await pool.query`UPDATE Score SET grade = ${newGrade} WHERE subject_code = ${subject_code} AND student_id = ${id};`;
 };
 
 //평균학점
@@ -88,9 +88,17 @@ exports.filterAndSortScores = async function (id, filter, sort, order) {
   return recordset;
 };
 
-//성적삭제
-exports.checkScoreExists = async function (id, subject_code) {
+//성적 삭제
+exports.deleteScore = async function (id, subject_code) {
   const pool = await poolPromise;
-  const result = await pool.query`SELECT COUNT(1) FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
-  return result.recordset[0][''] > 0;
+
+  const checkResult = await pool.query`SELECT COUNT(1) AS count FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
+  const count = checkResult.recordset[0].count;
+
+  if (count === 0) {
+    return false;
+  }
+
+  await pool.query`DELETE FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
+  return true;
 };
