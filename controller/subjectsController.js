@@ -79,37 +79,6 @@ exports.dateScore = async function (req, res, next) {
   }
 };
 
-//성적정렬 컨트롤러
-exports.sortScores = async function (req, res, next) {
-  try {
-    const { order } = req.body;
-    let sortedScores;
-
-    switch (order) {
-      case 'asc':
-        sortedScores = await subjectsModel.sortScoreAsc(req.user);
-        break;
-      case 'desc':
-        sortedScores = await subjectsModel.sortScoreDesc(req.user);
-        break;
-      case 'default':
-        sortedScores = await subjectsModel.sortScoreDefault(req.user);
-        break;
-      default:
-        res.status(400).json({ success: false, message: 'Invalid order parameter' });
-        return;
-    }
-
-    if (sortedScores && sortedScores.length > 0) {
-      res.status(200).json({ success: true, sortedScores });
-    } else {
-      res.status(404).json({ success: false, message: 'Sorted scores not found' });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
 //들은과목 수 확인
 exports.listenSubject = async function (req, res, next) {
   try {
@@ -123,33 +92,20 @@ exports.listenSubject = async function (req, res, next) {
   } catch (error) {
     next(error);
   }
-};
+}; 
 
-//전공,비전공 필터링
-exports.filterScores = async function (req, res, next) {
+//통합정렬
+exports.filterAndSortScores = async function (req, res, next) {
   try {
-    const { filter } = req.body;
-    let filteredScores;
+    const { filter, sort, order } = req.body;
+    let scores;
 
-    switch (filter) {
-      case 'major':
-        filteredScores = await subjectsModel.majorSubject(req.user);
-        break;
-      case 'notmajor':
-        filteredScores = await subjectsModel.notmajorSubject(req.user);
-        break;
-      case 'default':
-        filteredScores = await subjectsModel.sortScoreDefault(req.user);
-        break;
-      default:
-        res.status(400).json({ success: false, message: '잘못된 필터입니다' });
-        return;
-    }
+    scores = await subjectsModel.filterAndSortScores(req.user, filter, sort, order);
 
-    if (filteredScores && filteredScores.length > 0) {
-      res.status(200).json({ success: true, filteredScores });
+    if (scores && scores.length > 0) {
+      res.status(200).json({ success: true, scores });
     } else {
-      res.status(404).json({ success: false, message: '필터된 성적이 없습니다' });
+      res.status(404).json({ success: false, message: 'No scores found' });
     }
   } catch (error) {
     next(error);
