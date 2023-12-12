@@ -3,16 +3,16 @@ const { poolPromise } = require("./index");
 
 //성적등록
 exports.addScore = async function (userScore) {
-    const { subject_code, academic_credit, subject_name, grade, student_id, date } = userScore;
+    const { subject_code, academic_credit, subject_name, grade, date, student_id, target_grade } = userScore;
     const pool = await poolPromise;
     await pool.query`INSERT INTO Score
-                        VALUES (${subject_code}, ${subject_name}, ${academic_credit}, ${grade}, ${date}, ${student_id});`;       
+                        VALUES (${subject_code}, ${subject_name}, ${academic_credit}, ${grade}, ${date}, ${student_id}, ${target_grade});`;       
 };
 
 //성적수정
-exports.changeScore = async function (newGrade, subject_code, student_id) {
+exports.changeScore = async function (newGrade, subject_code, id) {
     const pool = await poolPromise;
-    await pool.query`UPDATE Score SET grade = ${newGrade} WHERE subject_code = ${subject_code} AND student_id = ${student_id};`;
+    await pool.query`UPDATE Score SET grade = ${newGrade} WHERE subject_code = ${subject_code} AND student_id = ${id};`;
 };
 
 //평균학점
@@ -46,7 +46,7 @@ exports.dateScore = async function (date, id) {
 exports.listenSubject = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
-      await pool.query`SELECT COUNT(*) as student_id FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
+      await pool.query`SELECT COUNT(*) as listen_Subject FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
     return recordset;
 };
 
@@ -86,4 +86,19 @@ exports.filterAndSortScores = async function (id, filter, sort, order) {
 
   const { recordset } = await pool.query(query);
   return recordset;
+};
+
+//성적 삭제
+exports.deleteScore = async function (id, subject_code) {
+  const pool = await poolPromise;
+
+  const checkResult = await pool.query`SELECT COUNT(1) AS count FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
+  const count = checkResult.recordset[0].count;
+
+  if (count === 0) {
+    return false;
+  }
+
+  await pool.query`DELETE FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
+  return true;
 };

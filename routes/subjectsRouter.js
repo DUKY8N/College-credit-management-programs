@@ -21,7 +21,10 @@ router.post("/dateScore", authMiddleware.isLoginStatus, subjectsController.dateS
 //*들은과목수확인 (테스트완료)
 router.post("/listenSubject", authMiddleware.isLoginStatus, subjectsController.listenSubject);
 
-//*통합정렬
-router.post("/totalscore", authMiddleware.isLoginStatus, subjectsController.filterAndSortScores);
+//*통합정렬 (테스트완료)
+router.post("/totalScore", authMiddleware.isLoginStatus, subjectsController.filterAndSortScores);
+
+//*성적삭제 (테스트완료)
+router.post("/deleteScore", authMiddleware.isLoginStatus, subjectsController.deleteScore);
 
 module.exports = router;

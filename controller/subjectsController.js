@@ -19,9 +19,9 @@ exports.addScore = async function (req, res, next) {
 //! 해당 과목 코드까지 불러오기 구현
 exports.changeScore = async function (req, res, next) {
     try {
-      const { newGrade, subject_code, student_id } = req.body;
+      const { newGrade, subject_code } = req.body;
   
-      await subjectsModel.changeScore(newGrade, subject_code, student_id);
+      await subjectsModel.changeScore(newGrade, subject_code, req.user);
   
       res.status(200).json({ success: true, message: 'Score updated successfully' });
     } catch (error) {
@@ -49,7 +49,7 @@ exports.Graduated = async function (req, res, next) {
   try {
     const { subject_code } = req.body;
 
-    const result = await subjectsModel.Graduated(user.name, subject_code);
+    const result = await subjectsModel.Graduated(req.user, subject_code);
 
     if (result && result.length > 0) {
       res.status(200).json({ success: true, message: 'Subject codes match', result });
@@ -106,6 +106,23 @@ exports.filterAndSortScores = async function (req, res, next) {
       res.status(200).json({ success: true, scores });
     } else {
       res.status(404).json({ success: false, message: 'No scores found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+//성적삭제
+exports.deleteScore = async function (req, res, next) {
+  try {
+    const { subject_code } = req.body;
+
+    const success = await subjectsModel.deleteScore(req.user, subject_code);
+
+    if (success) {
+      res.status(200).json({ success: true, message: 'Score successfully deleted' });
+    } else {
+      res.status(404).json({ success: false, message: 'Score not found or already deleted' });
     }
   } catch (error) {
     next(error);
