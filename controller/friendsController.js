@@ -6,14 +6,15 @@ const bcrypt = require("bcrypt");
 exports.addFriend = async function (req,res,next) {
   try{
     //필수 입력 필드 검사
-    const {id} = req.body;
-    if(!id){
+    const { id, username, friend_id } = req.body;
+    console.log(id)
+    console.log(username)
+    if(!id || !friend_id){
       console.log(id);
       return next(createError(400, "Missing required fields"));
     }
 
-    
-    await friendsModel.addFriend({id});
+    await friendsModel.addFriend(id, friend_id);
     return res.status(201).json({ message: "Add Friend!" });
   }catch (error) {
     next(error);
@@ -23,13 +24,12 @@ exports.addFriend = async function (req,res,next) {
 exports.deleteFriend = async function (req,res,next) {
   try{
     //필수 입력 필드 검사
-    const {f_id} = req.body;
+    const f_id = req.body;
     if(!f_id){
       console.log(f_id);
       return next(createError(400, "Missing required fields"));
     }
 
-    
     await friendsModel.deleteFriend({f_id});
     return res.status(200).json({ message: "Delete Friend!" });
   }catch (error) {
