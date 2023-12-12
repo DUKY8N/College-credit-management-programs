@@ -3,10 +3,10 @@ const { poolPromise } = require("./index");
 
 //성적등록
 exports.addScore = async function (userScore) {
-    const { subject_code, academic_credit, subject_name, grade, student_id, date } = userScore;
+    const { subject_code, academic_credit, subject_name, grade, date, student_id, target_grade } = userScore;
     const pool = await poolPromise;
     await pool.query`INSERT INTO Score
-                        VALUES (${subject_code}, ${subject_name}, ${academic_credit}, ${grade}, ${date}, ${student_id});`;       
+                        VALUES (${subject_code}, ${subject_name}, ${academic_credit}, ${grade}, ${date}, ${student_id}, ${target_grade});`;       
 };
 
 //성적수정
@@ -46,7 +46,7 @@ exports.dateScore = async function (date, id) {
 exports.listenSubject = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
-      await pool.query`SELECT COUNT(*) as student_id FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
+      await pool.query`SELECT COUNT(*) as listen_Subject FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
     return recordset;
 };
 
