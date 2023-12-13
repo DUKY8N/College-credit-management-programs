@@ -47,32 +47,13 @@ exports.avgScore = async function (req, res, next) {
 //졸업요건비교 컨트롤러
 exports.Graduated = async function (req, res, next) {
   try {
-    const { subject_code } = req.body;
 
-    const result = await subjectsModel.Graduated(req.user, subject_code);
+    const result = await subjectsModel.Graduated(req.user);
 
     if (result && result.length > 0) {
-      res.status(200).json({ success: true, message: 'Subject codes match', result });
+      res.status(200).json({ success: true, result });
     } else {
-      res.status(404).json({ success: false, message: 'Subject codes do not match' });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
-//학기별성적보기 컨트롤러
-//! 해당 학기 불러오기 구현
-exports.dateScore = async function (req, res, next) {
-  try {
-    const { date } = req.body;
-
-    const dateScores = await subjectsModel.dateScore(date, req.user);
-
-    if (dateScores && dateScores.length > 0) {
-      res.status(200).json({ success: true, dateScores });
-    } else {
-      res.status(404).json({ success: false, message: 'No scores found for the given date and student ID' });
+      res.status(404).json({ success: false });
     }
   } catch (error) {
     next(error);
@@ -97,10 +78,10 @@ exports.listenSubject = async function (req, res, next) {
 //통합정렬
 exports.filterAndSortScores = async function (req, res, next) {
   try {
-    const { filter, sort, order } = req.body;
+    const { date, filter, sort, order } = req.body;
     let scores;
 
-    scores = await subjectsModel.filterAndSortScores(req.user, filter, sort, order);
+    scores = await subjectsModel.filterAndSortScores(req.user, date, filter, sort, order);
 
     if (scores && scores.length > 0) {
       res.status(200).json({ success: true, scores });

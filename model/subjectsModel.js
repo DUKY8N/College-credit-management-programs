@@ -26,20 +26,16 @@ exports.avgScore = async function (id) {
 
 //졸업요건비교
 exports.Graduated = async function (id) {
-    const pool = await poolPromise;
-    const { recordset } = await pool.query` SELECT Score.subject_code
-                                            FROM Score
-                                            INNER JOIN graduated ON Score.subject_code = graduated.subject_code
-                                            WHERE Score.student_id = ${id};`;
-    return recordset;
-};
-
-//학기별 성적보기
-exports.dateScore = async function (date, id) {
-    const pool = await poolPromise;
-    const { recordset } =
-      await pool.query`SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE date = ${date} AND student_id = ${id};`;
-    return recordset;
+  const pool = await poolPromise;
+  const { recordset } = await pool.query`SELECT graduated.subject_code, graduated.subject_name, 
+                                         Score.academic_credit, Score.grade,
+                                         CASE 
+                                             WHEN Score.subject_code IS NOT NULL THEN '이수'
+                                             ELSE '미이수'
+                                         END as completion_status
+                                         FROM graduated
+                                         LEFT JOIN Score ON graduated.subject_code = Score.subject_code AND Score.student_id = ${id};`;
+  return recordset;
 };
 
 //들은과목수확인
@@ -51,9 +47,13 @@ exports.listenSubject = async function (id) {
 };
 
 //통합정렬
-exports.filterAndSortScores = async function (id, filter, sort, order) {
+exports.filterAndSortScores = async function (id, date, filter, sort, order) {
   const pool = await poolPromise;
   let query = `SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id}`;
+
+  if (date) {
+    query += ` AND date = '${date}'`;
+  }
 
   if (filter === 'major') {
     query += ` AND subject_code LIKE ('%COM%')`;

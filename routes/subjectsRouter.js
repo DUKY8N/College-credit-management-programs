@@ -15,9 +15,6 @@ router.post("/avgScore", authMiddleware.isLoginStatus, subjectsController.avgSco
 //*졸업요건비교 (테스트완료)
 router.post("/Graduated", authMiddleware.isLoginStatus, subjectsController.Graduated);
 
-//*학기별성적보기 (테스트완료)
-router.post("/dateScore", authMiddleware.isLoginStatus, subjectsController.dateScore);
-
 //*들은과목수확인 (테스트완료)
 router.post("/listenSubject", authMiddleware.isLoginStatus, subjectsController.listenSubject);
 
