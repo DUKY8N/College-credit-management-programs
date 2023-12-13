@@ -27,12 +27,8 @@ exports.avgScore = async function (id) {
 //졸업요건비교
 exports.Graduated = async function (id) {
   const pool = await poolPromise;
-  const { recordset } = await pool.query`SELECT graduated.subject_code, graduated.subject_name, 
-                                         Score.academic_credit, Score.grade,
-                                         CASE 
-                                             WHEN Score.subject_code IS NOT NULL THEN '이수'
-                                             ELSE '미이수'
-                                         END as completion_status
+  const { recordset } = await pool.query`SELECT graduated.subject_code, graduated.subject_name, Score.academic_credit, Score.grade,
+                                         CASE WHEN Score.subject_code IS NOT NULL THEN '이수' ELSE '미이수' END as completion_status
                                          FROM graduated
                                          LEFT JOIN Score ON graduated.subject_code = Score.subject_code AND Score.student_id = ${id};`;
   return recordset;
