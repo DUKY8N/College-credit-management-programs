@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>페이지 레이아웃</title>
-    <link rel="stylesheet" href="stylesheets/myGrades.css">
-    <script src="javascripts/logOut.js"></script>
+    <link rel="stylesheet" href="/stylesheets/myGrades.css">
+    <script src="/javascripts/logOut.js"></script>
+    <script src="/javascripts/myGrades.js"></script>
 </head>
-<body>
+<body data-date="<%= date %>">
     <div class="container">
         <nav>
             <h1>내 학점 비서</h1>
@@ -24,10 +25,11 @@
             <section id="my-score">
                 <div class="content-title">
                     <div>
-                        <button class="square-button" id="previous"><</button>
-                        2023년도 2학기 성적
-                        <button class="square-button" id="subsequent">></button>
-                        <button class="square-button" id="add">+</button>
+                        <button class="square-button" id="previous">목표 설정</button>
+                        <button class="square-button" id="previous" onclick="navigateDate('previous')"><</button>
+                        <span id="date"></span>
+                        <button class="square-button" id="subsequent" onclick="navigateDate('next')">></button>
+                        <button class="square-button" id="add">+ 과목 추가</button>
                     </div>
                     <div class="label">
                         <p>과목 코드</p>
@@ -38,12 +40,12 @@
                     </div>
                 </div>
                 <div class="content-body">
-                    <% articles.forEach(function(article) { %>
+                    <% scores.forEach(function(score) { %>
                         <article>
-                            <p><%= article.content %></p>
-                            <p><%= article.content %></p>
-                            <p><%= article.content %></p>
-                            <p><%= article.content %></p>
+                            <p><%= score.subject_code %></p>
+                            <p><%= score.subject_name %></p>
+                            <p><%= score.academic_credit %></p>
+                            <p><%= score.grade %></p>
                             <button class="edit-button">수정</button>
                         </article>
                     <% }); %>
@@ -64,8 +66,18 @@
                     <article>lasldkfj</article>
                 </div>
             </section>
-            <section id="test">
-
+            <section id="comprehensive-information">
+                <p>➜ ~ 전학기 평균 학점</p>
+                <p> <%=userName%>님의 평균 학점은 "??"입니다.</p>
+                <br>
+                <p>➜ ~ ??년도 ??학기 평균 학점</p>
+                <p><%=userName%>님의 ??년도 ??학기 평균 학점은 "??"입니다.</p>
+                <br>
+                <p>➜ ~ 목표 평균 학점</p>
+                <p><%=userName%>님께서 설정하신 현재 평균 학점은 "??"입니다.</p>
+                <br>
+                <p>➜ ~ 현재 총 수강 과목 수</p>
+                <p><%=userName%>님께서 수강하신 총 과목 수는 "??"개 입니다.</p>
             </section>
         </div>
     </div>
