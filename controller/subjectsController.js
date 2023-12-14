@@ -109,3 +109,21 @@ exports.deleteScore = async function (req, res, next) {
     next(error);
   }
 };
+
+//졸업요건정렬
+exports.sortGraduat = async function (req, res, next) {
+  try {
+    const { date, filter, sort, order } = req.body;
+    let scores;
+
+    scores = await subjectsModel.sortGraduat(req.user, date, filter, sort, order);
+
+    if (scores && scores.length > 0) {
+      res.status(200).json({ success: true, scores });
+    } else {
+      res.status(404).json({ success: false, message: 'No scores found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

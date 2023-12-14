@@ -74,10 +74,15 @@ exports.filterAndSortScores = async function (id, date, filter, sort, order) {
       query += ` ORDER BY grade`;
   }
 
-  if (order === 'desc') {
-    query += ` DESC`;
-  } else {
-    query += ` ASC`;
+  switch(order) {
+    case 'desc':
+      query += ` DESC`;
+      break;
+    case 'asc':
+      query += ` ASC`;
+      break;
+    default:
+      query += ` ASC`;
   }
 
   const { recordset } = await pool.query(query);
@@ -98,3 +103,58 @@ exports.deleteScore = async function (id, subject_code) {
   await pool.query`DELETE FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
   return true;
 };
+
+//졸업요건정렬
+exports.sortGraduat = async function (id, date, filter, sort, order) {
+  const pool = await poolPromise;
+  let query = `SELECT Score.subject_code, Score.subject_name, Score.academic_credit, Score.grade,
+                       CASE 
+                       WHEN graduated.subject_code IS NOT NULL THEN '1' ELSE '0' END as completion_status
+               FROM graduated
+               LEFT JOIN Score ON graduated.subject_code = Score.subject_code AND Score.student_id = ${id}`;
+
+  if (date) {
+    query += ` AND date = '${date}'`;
+  }
+
+  if (filter === 'major') {
+    query += ` AND subject_code LIKE ('%COM%')`;
+  } else if (filter === 'notmajor') {
+    query += ` AND subject_code NOT LIKE ('%COM%')`;
+  }
+
+  switch(sort) {
+    case 'grade':
+      query += ` ORDER BY grade`;
+      break;
+    case 'subject_name':
+      query += ` ORDER BY subject_name`;
+      break;
+    case 'subject_code':
+      query += ` ORDER BY subject_code`;
+      break;
+    case 'academic_credit':
+      query += ` ORDER BY academic_credit`;
+      break;
+    case 'completion_status':
+      query += ` ORDER BY completion_status`;
+      break;
+    default:
+      query += ` ORDER BY grade`;
+  }
+
+  switch(order) {
+    case 'desc':
+      query += ` DESC`;
+      break;
+    case 'asc':
+      query += ` ASC`;
+      break;
+    default:
+      query += ` ASC`;
+  }
+
+  const { recordset } = await pool.query(query);
+  return recordset;
+};
+//TODO 졸업요건 정렬 수정 필요.

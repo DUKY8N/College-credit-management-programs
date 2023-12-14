@@ -24,4 +24,7 @@ router.post("/totalScore", authMiddleware.isLoginStatus, subjectsController.filt
 //*성적삭제 (테스트완료)
 router.post("/deleteScore", authMiddleware.isLoginStatus, subjectsController.deleteScore);
 
+//*졸업요건정렬
+router.post("/sortGraduated", authMiddleware.isLoginStatus, subjectsController.sortGraduat);
+
 module.exports = router;
