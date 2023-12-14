@@ -28,7 +28,7 @@ exports.avgScore = async function (id) {
 exports.Graduated = async function (id) {
   const pool = await poolPromise;
   const { recordset } = await pool.query`SELECT graduated.subject_code, graduated.subject_name, Score.academic_credit, Score.grade,
-                                         CASE WHEN Score.subject_code IS NOT NULL THEN '이수' ELSE '미이수' END as completion_status
+                                         CASE WHEN Score.subject_code IS NOT NULL THEN '1' ELSE '0' END as completion_status
                                          FROM graduated
                                          LEFT JOIN Score ON graduated.subject_code = Score.subject_code AND Score.student_id = ${id};`;
   return recordset;
@@ -105,42 +105,37 @@ exports.deleteScore = async function (id, subject_code) {
 };
 
 //졸업요건정렬
-exports.sortGraduat = async function (id, date, filter, sort, order) {
+exports.sortGraduated = async function (id, filter, sort, order) {
   const pool = await poolPromise;
-  let query = `SELECT Score.subject_code, Score.subject_name, Score.academic_credit, Score.grade,
-                       CASE 
-                       WHEN graduated.subject_code IS NOT NULL THEN '1' ELSE '0' END as completion_status
+  let query = `SELECT graduated.subject_code, graduated.subject_name, Score.academic_credit, Score.grade,
+               CASE WHEN Score.subject_code IS NOT NULL THEN '1' ELSE '0' END as completion_status
                FROM graduated
                LEFT JOIN Score ON graduated.subject_code = Score.subject_code AND Score.student_id = ${id}`;
 
-  if (date) {
-    query += ` AND date = '${date}'`;
-  }
-
   if (filter === 'major') {
-    query += ` AND subject_code LIKE ('%COM%')`;
+    query += ` WHERE Graduated.subject_code LIKE ('%COM%')`;
   } else if (filter === 'notmajor') {
-    query += ` AND subject_code NOT LIKE ('%COM%')`;
+    query += ` WHERE Graduated.subject_code NOT LIKE ('%COM%')`;
   }
 
   switch(sort) {
     case 'grade':
-      query += ` ORDER BY grade`;
+      query += ` ORDER BY Score.grade`;
       break;
     case 'subject_name':
-      query += ` ORDER BY subject_name`;
+      query += ` ORDER BY graduated.subject_name`;
       break;
     case 'subject_code':
-      query += ` ORDER BY subject_code`;
+      query += ` ORDER BY graduated.subject_code`;
       break;
     case 'academic_credit':
-      query += ` ORDER BY academic_credit`;
+      query += ` ORDER BY Score.academic_credit`;
       break;
     case 'completion_status':
       query += ` ORDER BY completion_status`;
       break;
     default:
-      query += ` ORDER BY grade`;
+      query += ` ORDER BY Score.grade`;
   }
 
   switch(order) {
@@ -157,4 +152,3 @@ exports.sortGraduat = async function (id, date, filter, sort, order) {
   const { recordset } = await pool.query(query);
   return recordset;
 };
-//TODO 졸업요건 정렬 수정 필요.

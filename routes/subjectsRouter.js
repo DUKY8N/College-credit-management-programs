@@ -25,6 +25,6 @@ router.post("/totalScore", authMiddleware.isLoginStatus, subjectsController.filt
 router.post("/deleteScore", authMiddleware.isLoginStatus, subjectsController.deleteScore);
 
 //*졸업요건정렬
-router.post("/sortGraduated", authMiddleware.isLoginStatus, subjectsController.sortGraduat);
+router.post("/sortGraduated", authMiddleware.isLoginStatus, subjectsController.sortGraduated);
 
 module.exports = router;
