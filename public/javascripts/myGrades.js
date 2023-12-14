@@ -1,9 +1,11 @@
 let date;
 let formattedDate;
+
 document.addEventListener('DOMContentLoaded', (event) => {
     date = document.body.dataset.date;
     formattedDate = convertToGradeFormat(date);
     document.getElementById('date').innerText = formattedDate;
+    document.getElementById('filter').innerText = "전체 성적";
 });
 
 function convertToGradeFormat(str) {
@@ -11,7 +13,7 @@ function convertToGradeFormat(str) {
     let year = parts[0]; // 첫 번째 부분은 년도
     let semester = parts[1]; // 두 번째 부분은 학기
 
-    return year + '년도 ' + semester + '학기 성적';
+    return year + '년도 ' + semester + '학기 ';
 }
 
 function navigateDate(direction) {
@@ -40,4 +42,7 @@ function navigateDate(direction) {
 
     window.location.href = `/myGrades/${year + '-' + semester}`
 }
-//TODO 연도 이동 버튼 누를 시 연도 변경
+
+function navigateCurrentDate() {
+    window.location.href = `/myGrades`;
+}

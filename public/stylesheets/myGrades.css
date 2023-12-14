@@ -118,7 +118,7 @@ article span {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     font-size: 14px;
     cursor: pointer;
-    margin: 0px 13px;
+    margin: 0px 8px;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 .square-button:hover {
@@ -176,4 +176,15 @@ nav {
 #my-score {
     grid-column: 1 / 1;
     grid-row: 1 / -1;
+}
+
+#filter {
+    color: rgb(54, 54, 196);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#date:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

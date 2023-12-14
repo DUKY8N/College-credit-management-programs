@@ -23,7 +23,10 @@ exports.getMyGradesPage = async (req, res, next) => {
     const articles = [];
     let userName = "";
     let date = req.params.date || getYearAndHalf();
-    const dateScores = await subjectsModel.dateScore(date, req.user);
+    let filter = "";
+    let sort = "";
+    let order = "";
+    const dateScores = await subjectsModel.filterAndSortScores(req.user, date, filter, sort, order);
 
     for (let i = 1; i <= 18; i++) {
         articles.push({ content: date + i });
