@@ -34,5 +34,11 @@ exports.changeName = async function (id, newName) {
   await pool.query`UPDATE Student SET name = ${newName} WHERE student_id = ${id}`;
 }
 
+exports.getUserName = async function (id) {
+  const pool = await poolPromise;
+  const { recordset } =
+    await pool.query`SELECT name FROM Student WHERE student_id = ${id}`;
+  return recordset[0].name;
+};
 
 // TODO: 회원 탈퇴 기능 구현

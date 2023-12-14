@@ -9,6 +9,9 @@ router.post("/signUp", authMiddleware.isLogoutStatus, usersController.signUp);
 //아이디중복확인
 router.post("/idCheck", usersController.idCheck);
 
+//유저 이름 가져오기
+router.get("/getUserName", authMiddleware.isLoginStatus, usersController.getUserName);
+
 //로그인
 router.post("/logIn", authMiddleware.isLogoutStatus, usersController.logIn);
 

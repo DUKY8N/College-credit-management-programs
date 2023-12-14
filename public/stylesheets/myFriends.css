@@ -145,5 +145,7 @@ nav {
 }
 
 #my-friends {
-    width: 50%;
+    width: 70%;
+    min-width: 200px;
+    max-width: 1000px;
 }

@@ -118,7 +118,7 @@ article span {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     font-size: 14px;
     cursor: pointer;
-    margin: 0px 13px;
+    margin: 0px 8px;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 .square-button:hover {
@@ -158,11 +158,14 @@ nav {
     bottom: 0px;
     width: 100%;
 }
-#test {
-    background-color: #2b9ce1;
-    color: #f2fcfe;
+#comprehensive-information {
+    background-color: #000000; /* 배경색을 검은색으로 변경 */
+    color: #00FF00; /* 글자색을 녹색으로 변경 */
     grid-column: 2 / 2;
     grid-row: 2 / 2;
+    border: 1px solid #00FF00;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 #graduation-requirements {
@@ -173,4 +176,15 @@ nav {
 #my-score {
     grid-column: 1 / 1;
     grid-row: 1 / -1;
+}
+
+#filter {
+    color: rgb(54, 54, 196);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#date:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -4,33 +4,29 @@ const usersModel = require("../model/usersModel");
 const bcrypt = require("bcrypt");
 
 exports.signUp = async function (req, res, next) {
-    try {
-      // 필수 입력 필드 검사
-      const { id, password, checkedPassword, username } = req.body;
-      if (!id || !password || !checkedPassword || !username) {
-        console.log(id, password, checkedPassword, username);
-        return next(createError(400, "Missing required fields"));
-      }
-  
-      // ID 중복 검사
-      if (await usersModel.checkIdDuplication(id)) {
-        return next(createError(409, "ID already exists"));
-      }
-  
-      // 비밀번호 일치성 검사
-      if (password !== checkedPassword) {
-        return next(createError(422, "Passwords do not match"));
-      }
-  
-      // 비밀번호 해싱
-      const hashedPassword = await bcrypt.hash(password, 12); // 비밀번호 해싱 (비동기 함수)
-
-      // 새 사용자 추가
-      await usersModel.addNewUser({ id, hashedPassword, username });
-      return res.status(201).json({ message: "Successfully signed up!" });
-    } catch (error) {
-      next(error);
+  try {
+    // 필수 입력 필드 검사
+    const { id, password, checkedPassword, username } = req.body;
+    if (!id || !password || !checkedPassword || !username) {
+      console.log(id, password, checkedPassword, username);
+      return next(createError(400, "Missing required fields"));
     }
+
+    // ID 중복 검사
+    if (await usersModel.checkIdDuplication(id)) return next(createError(409, "ID already exists"));
+
+    // 비밀번호 일치성 검사
+    if (password !== checkedPassword) return next(createError(422, "Passwords do not match"));
+
+    // 비밀번호 해싱
+    const hashedPassword = await bcrypt.hash(password, 12); // 비밀번호 해싱 (비동기 함수)
+
+    // 새 사용자 추가
+    await usersModel.addNewUser({ id, hashedPassword, username });
+    return res.status(201).json({ message: "Successfully signed up!" });
+  } catch (error) {
+    next(error);
+  }
 };
 
 
@@ -86,28 +82,30 @@ exports.logOut = function (req, res, next) {
 //회원정보 수정
 exports.modifyUserInfo = async function (req, res, next) {
   const { password, confirmPassword, username } = req.body;
-  if (!password && !username) { return next(createError(400, "Missing required fields")); }
+  if (!password && !username) return next(createError(400, "Missing required fields"));
 
   if (password) {
-    if (password !== confirmPassword) {
-      return next(createError(422, "Passwords do not match"));
-      console.log("Passwords do not match")
-    }
-    if (password.length <= 0) {
-      return next(createError(422, "Password must be at least 0 characters long"));
-      console.log("Password must be at least 0 characters long")
-    }
+    if (password !== confirmPassword) return next(createError(422, "Passwords do not match"));
+    if (password.length <= 0) return next(createError(422, "Password must be at least 0 characters long"));
 
     const hashedPassword = await bcrypt.hash(password, 12); // 비밀번호 해싱 (비동기 함수)
     await usersModel.changePassword(req.user, hashedPassword);
   }
   if (username) {
-    if (username.length <= 0) {
-      return next(createError(422, "Username must be at least 0 characters long"));
-      console.log("Username must be at least 0 characters long")
-    }
+    if (username.length <= 0) return next(createError(422, "Username must be at least 0 characters long"));
+
     await usersModel.changeName(req.user, username);
     res.status(200).json({ message: "User info updated successfully" });
+  }
+}
+
+//회원 이름 가져오기
+exports.getUserName = async function (id) {
+  try {
+    const name = await usersModel.getUserName(id);
+    return name;
+  } catch (error) {
+    throw error;
   }
 }
 
