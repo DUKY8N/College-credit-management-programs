@@ -23,9 +23,9 @@ exports.getMyGradesPage = async (req, res, next) => {
     const articles = [];
     let userName = "";
     let date = req.params.date || getYearAndHalf();
-    let filter = "";
-    let sort = "";
-    let order = "";
+    let filter = req.params.filter || "filter-all";
+    let sort = req.params.sort || "sort-non";
+    let order = req.params.order || "order-non";
     const dateScores = await subjectsModel.filterAndSortScores(req.user, date, filter, sort, order);
 
     for (let i = 1; i <= 18; i++) {
@@ -40,7 +40,10 @@ exports.getMyGradesPage = async (req, res, next) => {
     res.render('myGrades', {
         scores: dateScores,
         userName: userName,
-        date: date
+        date: date,
+        filter: filter,
+        sort: sort,
+        order: order
     }); 
 };
 

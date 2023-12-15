@@ -8,7 +8,7 @@
     <script src="/javascripts/logOut.js"></script>
     <script src="/javascripts/myGrades.js"></script>
 </head>
-<body data-date="<%= date %>">
+<body data-date="<%= date %>" data-filter="<%= filter %>" data-sort="<%= sort %>" data-order="<%= order %>">
     <div class="container">
         <nav>
             <h1>내 학점 비서</h1>
@@ -27,16 +27,16 @@
                     <div>
                         <button class="square-button" id="previous">목표 설정</button>
                         <button class="square-button" id="previous" onclick="navigateDate('previous')"><</button>
-                        <span id="date" onclick="navigateCurrentDate()"></span><span id="filter"></span>
+                        <span id="date" onclick="navigateCurrentDate()"></span><span id="filter" onclick="navigateFilter()"></span>
                         <button class="square-button" id="subsequent" onclick="navigateDate('next')">></button>
                         <button class="square-button" id="add">+ 과목 추가</button>
                     </div>
                     <div class="label">
-                        <p>과목 코드</p>
-                        <p>과목 명</p>
-                        <p>학점</p>
-                        <p>획득 등급</p>
-                        <p>정보 수정</p>
+                        <span id="subject_code" onclick="navigateSortAndOrder('subject_code')">과목 코드</span>
+                        <span id="subject_name" onclick="navigateSortAndOrder('subject_name')">과목 명</span>
+                        <span id="academic_credit" onclick="navigateSortAndOrder('academic_credit')">학점</span>
+                        <span id="grade" onclick="navigateSortAndOrder('grade')">획득 평점</span>
+                        <span>정보 수정</span>
                     </div>
                 </div>
                 <div class="content-body">
@@ -45,7 +45,7 @@
                             <p><%= score.subject_code %></p>
                             <p><%= score.subject_name %></p>
                             <p><%= score.academic_credit %></p>
-                            <p><%= score.grade %></p>
+                            <p class="grade"><%= score.grade %></p>
                             <button class="edit-button">수정</button>
                         </article>
                     <% }); %>
@@ -55,11 +55,11 @@
                 <div class="content-title">
                     졸업 요건
                     <div class="label">
-                        <p>과목 코드</p>
-                        <p>과목 명</p>
-                        <p>학점</p>
-                        <p>획득 등급</p>
-                        <p>이수 상태</p>
+                        <span>과목 코드</span>
+                        <span>과목 명</span>
+                        <span>학점</span>
+                        <span>획득 등급</span>
+                        <span>이수 상태</span>
                     </div>
                 </div>
                 <div class="content-body">
