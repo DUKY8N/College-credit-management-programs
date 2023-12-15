@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     graduatedFilter = document.body.dataset.graduatedFilter;
     graduatedSort = document.body.dataset.graduatedSort;
     graduatedOrder = document.body.dataset.graduatedOrder;
-    document.getElementById('date').innerText = convertToGradeFormat(date);
+    displayConvertedGrade();
     displayScoreFilter();
     displayGraduatedFilter();
 
@@ -31,6 +31,13 @@ function convertToGradeFormat(str) {
     let semester = parts[1]; // 두 번째 부분은 학기
 
     return year + '년도 ' + semester + '학기 ';
+}
+
+function displayConvertedGrade() {
+    let elements = document.getElementsByClassName('date');
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].innerText = convertToGradeFormat(date);
+    }
 }
 
 function navigateDate(direction) {

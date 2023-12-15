@@ -20,8 +20,15 @@ exports.avgScore = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
       await pool.query`SELECT ROUND(SUM(academic_credit * grade) / SUM(academic_credit), 2) AS averageScore FROM Score WHERE student_id = ${id};`;
-      console.log('Model recordset:', recordset);
-    return recordset;
+    return recordset[0].averageScore;
+};
+
+//학기평균학점
+exports.semesterAvgScore = async function (id, date) {
+  const pool = await poolPromise;
+  const { recordset } =
+    await pool.query`SELECT ROUND(SUM(academic_credit * grade) / SUM(academic_credit), 2) AS averageScore FROM Score WHERE student_id = ${id} AND date = ${date};`;
+  return recordset[0].averageScore;
 };
 
 //졸업요건비교
@@ -39,7 +46,7 @@ exports.listenSubject = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
       await pool.query`SELECT COUNT(*) as listen_Subject FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
-    return recordset;
+    return recordset[0].listen_Subject;
 };
 
 //통합정렬

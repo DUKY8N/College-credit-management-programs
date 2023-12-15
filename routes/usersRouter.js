@@ -21,4 +21,7 @@ router.post("/logOut", authMiddleware.isLoginStatus, usersController.logOut);
 //계정관리
 router.post("/modifyUserInfo", authMiddleware.isLoginStatus, usersController.modifyUserInfo);
 
+//회원 졸업 목표 평균 학점 가져오기 
+router.get("/getUserGraduatedTargetAverageGrade" , authMiddleware.isLoginStatus, usersController.getUserGraduatedTargetAverageGrade);
+
 module.exports = router;

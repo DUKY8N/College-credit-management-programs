@@ -12,6 +12,9 @@ router.post("/changeScore", authMiddleware.isLoginStatus, subjectsController.cha
 //*평균학점계산 (테스트완료)
 router.post("/avgScore", authMiddleware.isLoginStatus, subjectsController.avgScore);
 
+//*학기평균학점계산 (테스트 중)
+router.post("/semesterAvgScore", authMiddleware.isLoginStatus, subjectsController.semesterAvgScore);
+
 //*졸업요건비교 (테스트완료)
 router.post("/Graduated", authMiddleware.isLoginStatus, subjectsController.Graduated);
 

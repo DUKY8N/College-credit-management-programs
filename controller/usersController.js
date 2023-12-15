@@ -109,4 +109,19 @@ exports.getUserName = async function (id) {
   }
 }
 
+//회원 졸업 목표 평균 학점 가져오기 
+exports.getUserGraduatedTargetAverageGrade = async function (req, res, next) {
+  try {
+    const result = await usersModel.getUserGraduatedTargetAverageGrade(req.user);
+
+    if (result) {
+      res.status(200).json({ success: true, message: 'Student scores exist', result });
+    } else {
+      res.status(404).json({ success: false, message: 'Student scores not found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+}; 
+
 //TODO: 회원탈퇴

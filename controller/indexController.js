@@ -1,6 +1,7 @@
 const createError = require("http-errors");
 const usersController = require("../controller/usersController");
 const subjectsModel = require("../model/subjectsModel");
+const usersModel = require("../model/usersModel");
 
 function getYearAndHalf() {
     let today = new Date();
@@ -20,21 +21,22 @@ function getYearAndHalf() {
 }
 
 exports.getMyGradesPage = async (req, res, next) => {
-    const articles = [];
     let userName = "";
-    let date = req.params.date || getYearAndHalf();
-    let scoreFilter = req.params.scoreFilter || "scoreFilter-all";
-    let scoreSort = req.params.scoreSort || "scoreSort-non";
-    let scoreOrder = req.params.scoreOrder || "scoreOrder-non";
-    let graduatedFilter = req.params.graduatedFilter || "graduatedFilter-all";
-    let graduatedSort = req.params.graduatedSort || "graduatedSort-non";
-    let graduatedOrder = req.params.graduatedOrder || "graduatedOrder-non";
+    const date = req.params.date || getYearAndHalf();
+    const scoreFilter = req.params.scoreFilter || "scoreFilter-all";
+    const scoreSort = req.params.scoreSort || "scoreSort-non";
+    const scoreOrder = req.params.scoreOrder || "scoreOrder-non";
+    const graduatedFilter = req.params.graduatedFilter || "graduatedFilter-all";
+    const graduatedSort = req.params.graduatedSort || "graduatedSort-non";
+    const graduatedOrder = req.params.graduatedOrder || "graduatedOrder-non";
     const dateScores = await subjectsModel.filterAndSortScores(req.user, date, scoreFilter, scoreSort, scoreOrder);
     const graduatedList = await subjectsModel.sortGraduated(req.user, graduatedFilter, graduatedSort, graduatedOrder);
+    const avgScore = await subjectsModel.avgScore(req.user);
+    const semesterAvgScore = await subjectsModel.semesterAvgScore(req.user, date) || 0;
+    const listenSubjectCount = await subjectsModel.listenSubject(req.user);
+    const GraduatedTargetAverageGrade = await usersModel.getUserGraduatedTargetAverageGrade(req.user);
+    
 
-    for (let i = 1; i <= 18; i++) {
-        articles.push({ content: date + i });
-    }
     try {
         userName = await usersController.getUserName(req.user);
     } catch (error) {
@@ -51,7 +53,11 @@ exports.getMyGradesPage = async (req, res, next) => {
         scoreOrder: scoreOrder,
         graduatedFilter: graduatedFilter,
         graduatedSort: graduatedSort,
-        graduatedOrder: graduatedOrder
+        graduatedOrder: graduatedOrder,
+        avgScore: avgScore,
+        semesterAvgScore: semesterAvgScore,
+        listenSubjectCount: listenSubjectCount,
+        GraduatedTargetAverageGrade: GraduatedTargetAverageGrade
     }); 
 };
 

@@ -44,6 +44,21 @@ exports.avgScore = async function (req, res, next) {
   }
 };
 
+//학기 평균 학점 계산 컨트롤러
+exports.semesterAvgScore = async function (req, res, next) {
+  try {
+    const averageScore = await subjectsModel.semesterAvgScore(req.user, req.body.date);
+
+    if (averageScore) {
+      res.status(200).json({ success: true, averageScore });
+    } else {
+      res.status(404).json({ success: false, message: 'Average score not found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 //졸업요건비교 컨트롤러
 exports.Graduated = async function (req, res, next) {
   try {

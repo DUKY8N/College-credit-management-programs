@@ -35,7 +35,7 @@
                     <div>
                         <button class="square-button" id="previous">목표 설정</button>
                         <button class="square-button" id="previous" onclick="navigateDate('previous')"><</button>
-                        <span id="date" onclick="navigateCurrentDate()"></span><span id="score-filter" class="filter" onclick="navigateScoreFilter()"></span>
+                        <span id="score-date" class="date" onclick="navigateCurrentDate()"></span><span id="score-filter" class="filter" onclick="navigateScoreFilter()"></span>
                         <button class="square-button" id="subsequent" onclick="navigateDate('next')">></button>
                         <button class="square-button" id="add">+ 과목 추가</button>
                     </div>
@@ -85,17 +85,17 @@
                 </div>
             </section>
             <section id="comprehensive-information">
-                <p>➜ ~ 전학기 평균 학점</p>
-                <p> <%=userName%>님의 평균 학점은 "??"입니다.</p>
+                <p>➜ ~ 목표 평균 평점</p>
+                <p><%=userName%>님께서 설정하신 목표 평균 평점은 "<%=GraduatedTargetAverageGrade%>"입니다.</p>
                 <br>
-                <p>➜ ~ ??년도 ??학기 평균 학점</p>
-                <p><%=userName%>님의 ??년도 ??학기 평균 학점은 "??"입니다.</p>
+                <p>➜ ~ 전학기 평균 평점</p>
+                <p> <%=userName%>님의 전학기 평균 평점은 "<%=avgScore%>"입니다.</p>
                 <br>
-                <p>➜ ~ 목표 평균 학점</p>
-                <p><%=userName%>님께서 설정하신 현재 평균 학점은 "??"입니다.</p>
+                <p>➜ ~ <span class="date"></span> 평균 평점</p>
+                <p><%=userName%>님의 <span class="date"></span> 평균 평점은 "<%=semesterAvgScore%>"입니다.</p>
                 <br>
                 <p>➜ ~ 현재 총 수강 과목 수</p>
-                <p><%=userName%>님께서 수강하신 총 과목 수는 "??"개 입니다.</p>
+                <p><%=userName%>님께서 총 수강하신 과목 수는 "<%=listenSubjectCount%>"개 입니다.</p>
             </section>
         </div>
     </div>
