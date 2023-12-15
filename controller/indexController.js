@@ -23,10 +23,14 @@ exports.getMyGradesPage = async (req, res, next) => {
     const articles = [];
     let userName = "";
     let date = req.params.date || getYearAndHalf();
-    let filter = req.params.filter || "filter-all";
-    let sort = req.params.sort || "sort-non";
-    let order = req.params.order || "order-non";
-    const dateScores = await subjectsModel.filterAndSortScores(req.user, date, filter, sort, order);
+    let scoreFilter = req.params.scoreFilter || "scoreFilter-all";
+    let scoreSort = req.params.scoreSort || "scoreSort-non";
+    let scoreOrder = req.params.scoreOrder || "scoreOrder-non";
+    let graduatedFilter = req.params.graduatedFilter || "graduatedFilter-all";
+    let graduatedSort = req.params.graduatedSort || "graduatedSort-non";
+    let graduatedOrder = req.params.graduatedOrder || "graduatedOrder-non";
+    const dateScores = await subjectsModel.filterAndSortScores(req.user, date, scoreFilter, scoreSort, scoreOrder);
+    const graduatedList = await subjectsModel.sortGraduated(req.user, graduatedFilter, graduatedSort, graduatedOrder);
 
     for (let i = 1; i <= 18; i++) {
         articles.push({ content: date + i });
@@ -39,11 +43,15 @@ exports.getMyGradesPage = async (req, res, next) => {
     }
     res.render('myGrades', {
         scores: dateScores,
+        graduatedList: graduatedList,
         userName: userName,
         date: date,
-        filter: filter,
-        sort: sort,
-        order: order
+        scoreFilter: scoreFilter,
+        scoreSort: scoreSort,
+        scoreOrder: scoreOrder,
+        graduatedFilter: graduatedFilter,
+        graduatedSort: graduatedSort,
+        graduatedOrder: graduatedOrder
     }); 
 };
 

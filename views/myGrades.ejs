@@ -8,7 +8,15 @@
     <script src="/javascripts/logOut.js"></script>
     <script src="/javascripts/myGrades.js"></script>
 </head>
-<body data-date="<%= date %>" data-filter="<%= filter %>" data-sort="<%= sort %>" data-order="<%= order %>">
+<body
+    data-date="<%= date %>"
+    data-score-filter="<%= scoreFilter %>"
+    data-score-sort="<%= scoreSort %>"
+    data-score-order="<%= scoreOrder %>"
+    data-graduated-filter="<%= graduatedFilter %>"
+    data-graduated-sort="<%= graduatedSort %>"
+    data-graduated-order="<%= graduatedOrder %>"
+    >
     <div class="container">
         <nav>
             <h1>내 학점 비서</h1>
@@ -27,15 +35,15 @@
                     <div>
                         <button class="square-button" id="previous">목표 설정</button>
                         <button class="square-button" id="previous" onclick="navigateDate('previous')"><</button>
-                        <span id="date" onclick="navigateCurrentDate()"></span><span id="filter" onclick="navigateFilter()"></span>
+                        <span id="date" onclick="navigateCurrentDate()"></span><span id="score-filter" class="filter" onclick="navigateScoreFilter()"></span>
                         <button class="square-button" id="subsequent" onclick="navigateDate('next')">></button>
                         <button class="square-button" id="add">+ 과목 추가</button>
                     </div>
                     <div class="label">
-                        <span id="subject_code" onclick="navigateSortAndOrder('subject_code')">과목 코드</span>
-                        <span id="subject_name" onclick="navigateSortAndOrder('subject_name')">과목 명</span>
-                        <span id="academic_credit" onclick="navigateSortAndOrder('academic_credit')">학점</span>
-                        <span id="grade" onclick="navigateSortAndOrder('grade')">획득 평점</span>
+                        <span id="subject_code" onclick="navigateScoreSortAndOrder('subject_code')">과목 코드</span>
+                        <span id="subject_name" onclick="navigateScoreSortAndOrder('subject_name')">과목 명</span>
+                        <span id="academic_credit" onclick="navigateScoreSortAndOrder('academic_credit')">학점</span>
+                        <span id="grade" onclick="navigateScoreSortAndOrder('grade')">획득 평점</span>
                         <span>정보 수정</span>
                     </div>
                 </div>
@@ -53,17 +61,27 @@
             </section>
             <section id="graduation-requirements">
                 <div class="content-title">
-                    졸업 요건
+                    <div>
+                        <span id="graduated-filter" class="filter" onclick="navigateGraduatedFilter()"></span><span> 졸업 요건</span>
+                    </div>
                     <div class="label">
-                        <span>과목 코드</span>
-                        <span>과목 명</span>
-                        <span>학점</span>
-                        <span>획득 등급</span>
-                        <span>이수 상태</span>
+                        <span id="graduated_subject_code" onclick="navigateGraduatedSortAndOrder('subject_code')">과목 코드</span>
+                        <span id="graduated_subject_name" onclick="navigateGraduatedSortAndOrder('subject_name')">과목 명</span>
+                        <span id="graduated_academic_credit" onclick="navigateGraduatedSortAndOrder('academic_credit')">학점</span>
+                        <span id="graduated_grade" onclick="navigateGraduatedSortAndOrder('grade')">획득 평점</span>
+                        <span id="graduated_completion_status" onclick="navigateGraduatedSortAndOrder('completion_status')">이수 상태</span>
                     </div>
                 </div>
                 <div class="content-body">
-                    <article>lasldkfj</article>
+                    <% graduatedList.forEach(function(graduatedItem) { %>
+                        <article>
+                            <p><%= graduatedItem.subject_code %></p>
+                            <p><%= graduatedItem.subject_name %></p>
+                            <p><%= graduatedItem.academic_credit || '-' %></p>
+                            <p class="grade"><%= (graduatedItem.grade !== null && graduatedItem.grade !== undefined) ? graduatedItem.grade : '-' %></p>
+                            <p class="completion_status"><%= graduatedItem.completion_status %></p>
+                        </article>
+                    <% }); %>
                 </div>
             </section>
             <section id="comprehensive-information">

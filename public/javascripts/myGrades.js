@@ -1,17 +1,28 @@
 let date;
-let filter;
-let sort;
-let order;
+let scoreFilter;
+let scoreSort;
+let scoreOrder;
+let graduatedFilter;
+let graduatedSort;
+let graduatedOrder;
 
 document.addEventListener('DOMContentLoaded', (event) => {
     date = document.body.dataset.date;
-    filter = document.body.dataset.filter;
-    sort = document.body.dataset.sort;
-    order = document.body.dataset.order;
+    scoreFilter = document.body.dataset.scoreFilter;
+    scoreSort = document.body.dataset.scoreSort;
+    scoreOrder = document.body.dataset.scoreOrder;
+    graduatedFilter = document.body.dataset.graduatedFilter;
+    graduatedSort = document.body.dataset.graduatedSort;
+    graduatedOrder = document.body.dataset.graduatedOrder;
     document.getElementById('date').innerText = convertToGradeFormat(date);
-    displayFilter();
-    displaySortAndOrder();
+    displayScoreFilter();
+    displayGraduatedFilter();
+
+    displayScoreSortAndOrder();
+    displayGraduatedSortAndOrder();
+
     displayGradeFloatToText();
+    displayCompletionStatusIntToText();
 });
 
 function convertToGradeFormat(str) {
@@ -43,43 +54,40 @@ function navigateDate(direction) {
         }
     }
 
-    window.location.href = `/myGrades/${year + '-' + semester}/${filter}/${sort}/${order}`;
+    window.location.href = `/myGrades/${year + '-' + semester}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`;
 }
 
 function navigateCurrentDate() {
     window.location.href = `/myGrades`;
 }
 
-function navigateFilter() {
-    if (filter === 'filter-all') window.location.href = `/myGrades/${date}/major/${sort}/${order}`;
-    if (filter === 'major') window.location.href = `/myGrades/${date}/notmajor/${sort}/${order}`;
-    if (filter === 'notmajor') window.location.href = `/myGrades/${date}/filter-all/${sort}/${order}`;
+function navigateScoreFilter() {
+    if (scoreFilter === 'scoreFilter-all') window.location.href = `/myGrades/${date}/major/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`;
+    if (scoreFilter === 'major') window.location.href = `/myGrades/${date}/notmajor/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`;
+    if (scoreFilter === 'notmajor') window.location.href = `/myGrades/${date}/scoreFilter-all/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`;
 }
 
-function displayFilter() {
-    if (filter === 'filter-all')document.getElementById('filter').innerText = "전체 성적";
-    if (filter === 'major')document.getElementById('filter').innerText = "전공 성적";
-    if (filter === 'notmajor')document.getElementById('filter').innerText = "교양 성적";
+function displayScoreFilter() {
+    if (scoreFilter === 'scoreFilter-all') document.getElementById('score-filter').innerText = "전체 성적";
+    if (scoreFilter === 'major') document.getElementById('score-filter').innerText = "전공 성적";
+    if (scoreFilter === 'notmajor') document.getElementById('score-filter').innerText = "교양 성적";
 }
 
-function navigateSortAndOrder(clickedSort) {
-    if (clickedSort !== sort) { window.location.href = `/myGrades/${date}/${filter}/${clickedSort}/asc`; return; }
+function navigateScoreSortAndOrder(clickedScoreSort) {
+    if (clickedScoreSort !== scoreSort) { window.location.href = `/myGrades/${date}/${scoreFilter}/${clickedScoreSort}/desc/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`; return; }
 
-    if (order === 'asc') window.location.href = `/myGrades/${date}/${filter}/${sort}/desc`;
-    if (order === 'desc') window.location.href = `/myGrades/${date}/${filter}/sort-non/order-non`;
+    if (scoreOrder === 'desc') window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/asc/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`;
+    if (scoreOrder === 'asc') window.location.href = `/myGrades/${date}/${scoreFilter}/scoreSort-non/scoreOrder-non/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`;
 }
 
-function displaySortAndOrder() {
-    if (order === 'asc') document.getElementById(sort).innerText = document.getElementById(sort).innerText + "▲";
-    if (order === 'desc') document.getElementById(sort).innerText = document.getElementById(sort).innerText + "▼";
+function displayScoreSortAndOrder() {
+    if (scoreOrder === 'asc') document.getElementById(scoreSort).innerText = document.getElementById(scoreSort).innerText + "▲";
+    if (scoreOrder === 'desc') document.getElementById(scoreSort).innerText = document.getElementById(scoreSort).innerText + "▼";
 }
 
 function displayGradeFloatToText() {
     let grades = document.getElementsByClassName('grade');
-    console.log(grades);
-    console.log(grades.length);
     for (let i = 0; i < grades.length; i++) {
-        console.log(grades[i].innerText);
         if (grades[i].innerText === '4.5') grades[i].innerText = 'A+';
         if (grades[i].innerText === '4.0') grades[i].innerText = 'A';
         if (grades[i].innerText === '3.5') grades[i].innerText = 'B+';
@@ -90,4 +98,36 @@ function displayGradeFloatToText() {
         if (grades[i].innerText === '1.0') grades[i].innerText = 'D';
         if (grades[i].innerText === '0') grades[i].innerText = 'F';
     }
+}
+
+function displayCompletionStatusIntToText() {
+    let completionStatusList = document.getElementsByClassName('completion_status');
+    for (let i = 0; i < completionStatusList.length; i++) {
+        if (completionStatusList[i].innerText === '1') completionStatusList[i].innerText = 'O';
+        if (completionStatusList[i].innerText === '0') completionStatusList[i].innerText = 'X';
+    }
+}
+
+function navigateGraduatedFilter() {
+    if (graduatedFilter === 'graduatedFilter-all') window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/major/${graduatedSort}/${graduatedOrder}`;
+    if (graduatedFilter === 'major') window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/notmajor/${graduatedSort}/${graduatedOrder}`;
+    if (graduatedFilter === 'notmajor') window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/graduatedFilter-all/${graduatedSort}/${graduatedOrder}`;
+}
+
+function displayGraduatedFilter() {
+    if (graduatedFilter === 'graduatedFilter-all') document.getElementById('graduated-filter').innerText = "전체";
+    if (graduatedFilter === 'major') document.getElementById('graduated-filter').innerText = "전공";
+    if (graduatedFilter === 'notmajor') document.getElementById('graduated-filter').innerText = "교양";
+}
+
+function navigateGraduatedSortAndOrder(clickedGraduatedSort) {
+    if (clickedGraduatedSort !== graduatedSort) { window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${clickedGraduatedSort}/desc`; return; }
+
+    if (graduatedOrder === 'desc') window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/asc`;
+    if (graduatedOrder === 'asc') window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/graduatedSort-non/graduatedOrder-non`;
+}
+
+function displayGraduatedSortAndOrder() {
+    if (graduatedOrder === 'asc') document.getElementById("graduated_"+graduatedSort).innerText = document.getElementById("graduated_"+graduatedSort).innerText + "▲";
+    if (graduatedOrder === 'desc') document.getElementById("graduated_"+graduatedSort).innerText = document.getElementById("graduated_"+graduatedSort).innerText + "▼";
 }

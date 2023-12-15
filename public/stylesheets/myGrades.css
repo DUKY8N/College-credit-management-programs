@@ -183,7 +183,7 @@ nav {
     grid-row: 1 / -1;
 }
 
-#filter {
+.filter {
     color: rgb(54, 54, 196);
     text-decoration: underline;
     cursor: pointer;
