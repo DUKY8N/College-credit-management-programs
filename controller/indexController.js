@@ -61,6 +61,15 @@ exports.getMyGradesPage = async (req, res, next) => {
     }); 
 };
 
+exports.getAddSubjectPage = async (req, res, next) => {
+    const date = req.params.date || getYearAndHalf();
+
+    res.render('addSubject', {
+        user: req.user,
+        date: date
+    });
+};
+
 exports.getMyFriendsPage = async (req, res, next) => {
     const articles = [];
     for (let i = 1; i <= 18; i++) {

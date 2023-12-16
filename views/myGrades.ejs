@@ -37,7 +37,7 @@
                         <button class="square-button" id="previous" onclick="navigateDate('previous')"><</button>
                         <span id="score-date" class="date" onclick="navigateCurrentDate()"></span><span id="score-filter" class="filter" onclick="navigateScoreFilter()"></span>
                         <button class="square-button" id="subsequent" onclick="navigateDate('next')">></button>
-                        <button class="square-button" id="add">+ 과목 추가</button>
+                        <a href="http://localhost:3000/addSubject/<%=date%>"><button class="square-button" id="add">+ 과목 추가</button></a>
                     </div>
                     <div class="label">
                         <span id="subject_code" onclick="navigateScoreSortAndOrder('subject_code')">과목 코드</span>

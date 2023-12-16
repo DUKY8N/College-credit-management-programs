@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과목 추가</title>
+    <link rel="stylesheet" href="/stylesheets/addSubject.css">
+    <script>
+        var studentId = "<%= user %>";
+    </script>
+    <script src="/javascripts/addSubject.js"></script>
+</head>
+<body
+    data-date="<%= date %>"
+    >
+    <div class="window">
+        <div class="title-bar">
+            <span class="title"><span class="date"></span> 과목 추가</span>
+        </div>
+        <div class="addSubject-container">
+            <form form class="addSubject-form">
+                <label for="subject_code">과목 코드 (필수)</label>
+                <input type="text" id="subject_code" name="subject_code" placeholder="COM302-01" oninput="this.value = this.value.replace(/[^0-9a-zA-Z-]/g, '').toUpperCase();" required>
+
+                <label for="subject_name">과목 명 (필수)</label>
+                <input type="text" id="subject_name" name="subject_name" placeholder="데이타베이스" required>
+            
+                <label for="academic_credit">과목 학점 (필수)</label>
+                <input type="number" id="academic_credit" name="academic_credit" placeholder="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+            
+                <label for="grade">획득 평점 (선택)</label>
+                <select id="grade" name="grade">
+                    <option value="">아직 획득하지 않음</option>
+                    <option value="4.5">A+</option>
+                    <option value="4.0">A</option>
+                    <option value="3.5">B+</option>
+                    <option value="3.0">B</option>
+                    <option value="2.5">C+</option>
+                    <option value="2.0">C</option>
+                    <option value="1.5">D+</option>
+                    <option value="1.0">D</option>
+                    <option value="0.0">F</option>
+                </select>
+            
+                <button type="button" onclick="addScore()">과목 추가하기</button>
+            </form>
+            <div class="back-link">
+                <a href="/myGrades/<%=date %>">돌아가기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
