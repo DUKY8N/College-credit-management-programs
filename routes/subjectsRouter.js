@@ -9,6 +9,12 @@ router.post("/addScore", authMiddleware.isLoginStatus, subjectsController.addSco
 //*성적수정 (테스트완료)
 router.post("/changeScore", authMiddleware.isLoginStatus, subjectsController.changeScore);
 
+//*과목수정 (테스트완료)
+router.post("/editSubject", authMiddleware.isLoginStatus, subjectsController.editSubject);
+
+//과목상세정보
+router.get("/getSubjectInfo/:subject_code/:date", authMiddleware.isLoginStatus, subjectsController.getSubjectInfo);
+
 //*평균학점계산 (테스트완료)
 router.post("/avgScore", authMiddleware.isLoginStatus, subjectsController.avgScore);
 

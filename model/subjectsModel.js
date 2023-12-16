@@ -13,6 +13,24 @@ exports.addScore = async function (userScore) {
 exports.changeScore = async function (newGrade, subject_code, id) {
     const pool = await poolPromise;
     await pool.query`UPDATE Score SET grade = ${newGrade} WHERE subject_code = ${subject_code} AND student_id = ${id};`;
+}
+
+//과목수정
+exports.editSubject = async function (id, subject_code, date, new_subject_name, new_subject_code, new_academic_credit, new_grade) {
+    const pool = await poolPromise;
+    await pool.query`
+      UPDATE Score SET grade = ${new_grade}, subject_code = ${new_subject_code}, subject_name = ${new_subject_name}, academic_credit = ${new_academic_credit}
+      WHERE subject_code = ${subject_code} AND student_id = ${id} AND date = ${date};
+    `;
+};;
+
+//과목정보 불러오기
+exports.getSubjectInfo = async function (id, subject_code, date) {
+  const pool = await poolPromise;
+  const { recordset } = await pool.query`
+    SELECT * FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code} AND date = ${date};
+  `;
+  return recordset[0];
 };
 
 //평균학점

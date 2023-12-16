@@ -95,14 +95,14 @@ function displayScoreSortAndOrder() {
 function displayGradeFloatToText() {
     let grades = document.getElementsByClassName('grade');
     for (let i = 0; i < grades.length; i++) {
-        if (grades[i].innerText === '4.5') grades[i].innerText = 'A+';
-        if (grades[i].innerText === '4.0') grades[i].innerText = 'A';
-        if (grades[i].innerText === '3.5') grades[i].innerText = 'B+';
-        if (grades[i].innerText === '3.0') grades[i].innerText = 'B';
-        if (grades[i].innerText === '2.5') grades[i].innerText = 'C+';
-        if (grades[i].innerText === '2.0') grades[i].innerText = 'C';
-        if (grades[i].innerText === '1.5') grades[i].innerText = 'D+';
-        if (grades[i].innerText === '1.0') grades[i].innerText = 'D';
+        if (grades[i].innerText == 4.5) grades[i].innerText = 'A+';
+        if (grades[i].innerText == 4.0) grades[i].innerText = 'A';
+        if (grades[i].innerText == 3.5) grades[i].innerText = 'B+';
+        if (grades[i].innerText == 3.0) grades[i].innerText = 'B';
+        if (grades[i].innerText == 2.5) grades[i].innerText = 'C+';
+        if (grades[i].innerText == 2.0) grades[i].innerText = 'C';
+        if (grades[i].innerText == 1.5) grades[i].innerText = 'D+';
+        if (grades[i].innerText == 1.0) grades[i].innerText = 'D';
         if (grades[i].innerText === '0') grades[i].innerText = 'F';
     }
 }

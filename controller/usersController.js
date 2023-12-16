@@ -8,7 +8,6 @@ exports.signUp = async function (req, res, next) {
     // 필수 입력 필드 검사
     const { id, password, checkedPassword, username } = req.body;
     if (!id || !password || !checkedPassword || !username) {
-      console.log(id, password, checkedPassword, username);
       return next(createError(400, "Missing required fields"));
     }
 

@@ -36,7 +36,6 @@ async function addScore() {
         return;
     }
 
-    console.log(subjectCode, subjectName, academicCredit, grade, date, studentId);
     try {
         const response = await fetch('http://localhost:3000/api/subjects/addScore', {
             method: 'POST',

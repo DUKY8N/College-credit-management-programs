@@ -29,6 +29,33 @@ exports.changeScore = async function (req, res, next) {
     }
 };
 
+//과목수정 컨트롤러
+exports.editSubject = async function (req, res, next) {
+    try {
+      const { subject_code, date, new_subject_name, new_subject_code, new_academic_credit, new_grade } = req.body;
+      await subjectsModel.editSubject(req.user, subject_code, date, new_subject_name, new_subject_code, new_academic_credit, new_grade);
+  
+      res.status(200).json({ success: true, message: 'Score updated successfully' });
+    } catch (error) {
+      next(error);
+    }
+};
+
+//과목정보 불러오기 컨트롤러
+exports.getSubjectInfo = async (req, res, next) => {
+  const { subject_code, date } = req.params;
+  const subjectInfo = await subjectsModel.getSubjectInfo(req.user , subject_code, date);
+  try {
+    if (subjectInfo) {
+      res.status(200).json({ success: true, subjectInfo });
+    } else {
+      res.status(404).json({ success: false, message: 'Subject not found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 //평균학점 계산 컨트롤러
 exports.avgScore = async function (req, res, next) {
   try {

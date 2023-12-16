@@ -5,8 +5,8 @@
     <title>과목 수</title>
     <link rel="stylesheet" href="/stylesheets/addSubject.css">
     <script>
-        let studentId = "<%= user %>";
         let date = "<%= date %>";
+        let subjectCode = "<%= subjectCode %>";
         let scoreFilter = "<%= scoreFilter %>";
         let scoreSort = "<%= scoreSort %>";
         let scoreOrder = "<%= scoreOrder %>";
@@ -35,14 +35,14 @@
                 <select id="grade" name="grade">
                     <option value="">아직 획득하지 않음</option>
                     <option value="4.5">A+</option>
-                    <option value="4.0">A</option>
+                    <option value="4">A</option>
                     <option value="3.5">B+</option>
-                    <option value="3.0">B</option>
+                    <option value="3">B</option>
                     <option value="2.5">C+</option>
-                    <option value="2.0">C</option>
+                    <option value="2">C</option>
                     <option value="1.5">D+</option>
-                    <option value="1.0">D</option>
-                    <option value="0.0">F</option>
+                    <option value="1">D</option>
+                    <option value="0">F</option>
                 </select>
             
                 <button type="button" onclick="editScore()">수정하기</button>
