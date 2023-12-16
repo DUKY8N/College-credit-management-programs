@@ -74,7 +74,7 @@ exports.compareScore = async function (id, friend_id, sort, order) {
 
 
 //친구삭제
-exports.deleteFriend = async function (id,friend_id) {
+exports.deleteFriend = async function (id, friend_id) {
   const pool = await poolPromise;
   const {recordset} = 
   await pool.query`DELETE FROM Friend WHERE (student_id = ${id} AND friend_student_id = ${friend_id});`;

@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const friendsModel = require("../model/friendsModel");
+const usersModel = require("../model/usersModel");
 const bcrypt = require("bcrypt");
 
 
@@ -8,7 +9,7 @@ exports.getMyFriendsList = async function (req,res,next) {
   try{
     const result = await friendsModel.getMyFriendsList(req.user);
 
-    if (result && result.length > 0) {
+    if (result) {
       res.status(200).json({ success: true, result });
     } else {
       res.status(404).json({ success: false, message: 'Student scores not found' });
@@ -21,13 +22,29 @@ exports.getMyFriendsList = async function (req,res,next) {
 //친구 추가
 exports.addFriend = async function (req,res,next) {
   try{
-    //필수 입력 필드 검사
-    const { id, username, friend_id } = req.body;
-    console.log(id)
-    console.log(username)
+    const { friend_id } = req.body;
+    const id = req.user;
+    const friendsList = await friendsModel.getMyFriendsList(req.user);
+
     if(!id || !friend_id){
-      console.log(id);
       return next(createError(400, "Missing required fields"));
+    }
+
+    //자기 자신을 친구로 등록하려는지
+    if (id == friend_id) {
+      return res.status(409).json({ message: "Can't add yourself!" });
+    }
+
+    //친구가 있는지,
+    for (let i = 0; i < friendsList.length; i++) {
+      if (friendsList[i].friend_student_id == friend_id) {
+        return res.status(409).json({ message: "Already exist Friend!" });
+      }
+    }
+
+    //등록하려는 유저가 실제로 존재하는지
+    if (!await usersModel.checkIdDuplication(friend_id)) {
+      return res.status(404).json({ message: "Not found Friend!" });
     }
 
     await friendsModel.addFriend(id, friend_id);
@@ -36,18 +53,18 @@ exports.addFriend = async function (req,res,next) {
     next(error);
   }
 };
+
 //친구 삭제
 exports.deleteFriend = async function (req,res,next) {
   try{
     //필수 입력 필드 검사
-    const {id, friend_id} = req.body;
-    console.log(id, friend_id)
+    const { friend_id } = req.body;
+    const id = req.user;
     if(!friend_id){
-      console.log(friend_id);
       return next(createError(400, "Missing required fields"));
     }
 
-    await friendsModel.deleteFriend(friend_id);
+    await friendsModel.deleteFriend(id, friend_id);
     return res.status(200).json({ message: "Delete Friend!" });
   }catch (error) {
     next(error);
@@ -58,7 +75,6 @@ exports.compareScore = async function (req, res, next) {
   try{
     const {id, friend_id, sort, order} = req.body;
     const result = await friendsModel.compareScore(id, friend_id, sort, order);
-    console.log(id, friend_id, sort, order)
     
     if (result && result.length > 0) {
       res.status(200).json({ success: true, result });
@@ -89,7 +105,6 @@ exports.compareScore = async function (req, res, next) {
 //내기준 친구 성적 비교, 친구기준 성적 비교
       
     /*if(!id || !friend_id){
-      console.log(id, friend_id);
       return next(createError(400, "Missing required fields"));
     }
 

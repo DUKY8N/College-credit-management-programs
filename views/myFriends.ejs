@@ -6,6 +6,7 @@
     <title>페이지 레이아웃</title>
     <link rel="stylesheet" href="stylesheets/myFriends.css">
     <script src="javascripts/logOut.js"></script>
+    <script src="javascripts/myFriends.js"></script>
 </head>
 <body>
     <div class="container">
@@ -25,13 +26,13 @@
                 <div class="content-title">
                     <div>
                         친구 목록
-                        <button class="square-button" id="add">+</button>
+                        <button class="square-button" id="add" onclick="addFriend()">+</button>
                     </div>
                 </div>
                 <div class="content-body">
                     <% myFriendsList.forEach(function(friend) { %>
                         <article>
-                            <button class="trash-bin-button"><img src="/images/trash-bin.png"></button>
+                            <button class="trash-bin-button" onclick="deleteFriend('<%= friend.friend_student_id %>')"><img src="/images/trash-bin.png"></button>
                             <p><%= friend.friend_student_id %></p>
                             <p><%= friend.name %></p>
                             <button class="edit-button">방문</button>
