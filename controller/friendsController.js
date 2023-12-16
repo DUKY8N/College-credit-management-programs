@@ -2,6 +2,22 @@ const createError = require("http-errors");
 const friendsModel = require("../model/friendsModel");
 const bcrypt = require("bcrypt");
 
+
+//친구 목록
+exports.getMyFriendsList = async function (req,res,next) {
+  try{
+    const result = await friendsModel.getMyFriendsList(req.user);
+
+    if (result && result.length > 0) {
+      res.status(200).json({ success: true, result });
+    } else {
+      res.status(404).json({ success: false, message: 'Student scores not found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 //친구 추가
 exports.addFriend = async function (req,res,next) {
   try{

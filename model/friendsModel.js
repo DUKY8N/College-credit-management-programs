@@ -1,5 +1,18 @@
 const { poolPromise } = require("./index");
 
+//친구목록
+exports.getMyFriendsList = async function (id) {
+  const pool = await poolPromise;
+  const { recordset } = await pool.query`
+    SELECT friend_student_id, Student.name
+    FROM Friend
+    LEFT JOIN Student
+    ON Friend.friend_student_id = Student.student_id
+    WHERE Friend.student_id = ${id}
+  `;
+  return recordset;
+};
+
 //친구등록
 exports.addFriend = async function (id,friend_id) {
   const pool = await poolPromise;

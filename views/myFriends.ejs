@@ -29,10 +29,11 @@
                     </div>
                 </div>
                 <div class="content-body">
-                    <% articles.forEach(function(article) { %>
+                    <% myFriendsList.forEach(function(friend) { %>
                         <article>
-                            <p>학번<%= article.content %></p>
-                            <p>이름<%= article.content %></p>
+                            <button class="trash-bin-button"><img src="/images/trash-bin.png"></button>
+                            <p><%= friend.friend_student_id %></p>
+                            <p><%= friend.name %></p>
                             <button class="edit-button">방문</button>
                         </article>
                     <% }); %>

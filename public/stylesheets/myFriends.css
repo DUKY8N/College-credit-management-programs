@@ -81,7 +81,7 @@ article {
     padding: 12px 0px;
     background-color: #ffffff;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 0.5fr repeat(3, 1fr);
     text-align: center;
 }
 article:nth-child(odd) {
@@ -101,6 +101,17 @@ article > * {
     align-items: center;
     position: sticky;
     top: 0;
+}
+
+.content-body p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.trash-bin-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .square-button {
@@ -132,6 +143,13 @@ article > * {
     cursor: pointer; /* 마우스 오버 시 커서 변경 */
     user-select: none; /* 텍스트 선택 방지 */
     width: 80px;
+}
+
+.trash-bin-button img {
+    width: 15px;
+    height: 15px;
+    margin: auto;
+    filter: invert(50%);
 }
 
 nav {

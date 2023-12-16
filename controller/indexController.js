@@ -1,6 +1,7 @@
 const createError = require("http-errors");
 const usersController = require("../controller/usersController");
 const subjectsModel = require("../model/subjectsModel");
+const friendsModel = require("../model/friendsModel");
 const usersModel = require("../model/usersModel");
 
 function getYearAndHalf() {
@@ -88,12 +89,9 @@ exports.getEditSubjectPage = async (req, res, next) => {
 }
 
 exports.getMyFriendsPage = async (req, res, next) => {
-    const articles = [];
-    for (let i = 1; i <= 18; i++) {
-        articles.push({ content: '내용 ' + i });
-    }
+    const myFriendsList = await friendsModel.getMyFriendsList(req.user);
 
-    res.render('myFriends', { articles: articles }); 
+    res.render('myFriends', { myFriendsList: myFriendsList }); 
 };
 
 exports.getLogInPage = async (req, res, next) => {
