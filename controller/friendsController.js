@@ -38,11 +38,11 @@ exports.deleteFriend = async function (req,res,next) {
   }
 };
 //성적비교
-exports.compareScore = async function (req,res,next) {
+exports.compareScore = async function (req, res, next) {
   try{
-    //필수 입력 필드 검사
-    const {id,friend_id} = req.body;
-    const result = await friendsModel.compareScore(req.subject_name, student_id, friendstudent_id);
+    const {id, friend_id, sort, order} = req.body;
+    const result = await friendsModel.compareScore(id, friend_id, sort, order);
+    console.log(id, friend_id, sort, order)
     
     if (result && result.length > 0) {
       res.status(200).json({ success: true, result });
@@ -53,6 +53,21 @@ exports.compareScore = async function (req,res,next) {
     next(error);
   }
 };
+
+// exports.orderAndSortScores = async function (req, res, next) {
+//   try {
+//     const { id, friend_id, sort, order } = req.body;
+//     const result = await friendsModel.orderAndSortScores(req.user, id, friend_id, sort, order);
+
+//     if (scores && scores.length > 0) {
+//       res.status(200).json({ success: true, result });
+//     } else {
+//       res.status(404).json({ success: false, message: 'No scores found' });
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 
 //내기준 친구 성적 비교, 친구기준 성적 비교
