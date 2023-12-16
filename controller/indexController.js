@@ -70,6 +70,23 @@ exports.getAddSubjectPage = async (req, res, next) => {
     });
 };
 
+exports.getEditSubjectPage = async (req, res, next) => {
+    const date = req.params.date || getYearAndHalf();
+    const subjectCode = req.params.subjectCode;
+    const scoreFilter = req.params.scoreFilter || "scoreFilter-all";
+    const scoreSort = req.params.scoreSort || "scoreSort-non";
+    const scoreOrder = req.params.scoreOrder || "scoreOrder-non";
+
+    res.render('editSubject', {
+        user: req.user,
+        date: date,
+        subjectCode: subjectCode,
+        scoreFilter: scoreFilter,
+        scoreSort: scoreSort,
+        scoreOrder: scoreOrder
+    });
+}
+
 exports.getMyFriendsPage = async (req, res, next) => {
     const articles = [];
     for (let i = 1; i <= 18; i++) {

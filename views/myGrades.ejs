@@ -33,9 +33,9 @@
             <section id="my-score">
                 <div class="content-title">
                     <div>
-                        <button class="square-button" id="previous">목표 설정</button>
+                        <button class="square-button" onclick="setUserGraduatedTargetAverageGrade()">목표 설정</button>
                         <button class="square-button" id="previous" onclick="navigateDate('previous')"><</button>
-                        <span id="score-date" class="date" onclick="navigateCurrentDate()"></span><span id="score-filter" class="filter" onclick="navigateScoreFilter()"></span>
+                        <span id="score-date" class="date" onclick="navigateCurrentDate()">&nbsp;</span>&nbsp;<span id="score-filter" class="filter" onclick="navigateScoreFilter()"></span>
                         <button class="square-button" id="subsequent" onclick="navigateDate('next')">></button>
                         <a href="http://localhost:3000/addSubject/<%=date%>"><button class="square-button" id="add">+ 과목 추가</button></a>
                     </div>
@@ -56,7 +56,7 @@
                             <p><%= score.subject_name %></p>
                             <p><%= score.academic_credit %></p>
                             <p class="grade"><%= score.grade %></p>
-                            <button class="edit-button">수정</button>
+                            <button class="edit-button" onclick="editSubject('<%= score.subject_code %>')">수정</button>
                         </article>
                     <% }); %>
                 </div>
@@ -88,7 +88,11 @@
             </section>
             <section id="comprehensive-information">
                 <p>➜ ~ 목표 평균 평점</p>
-                <p><%=userName%>님께서 설정하신 목표 평균 평점은 "<%=GraduatedTargetAverageGrade%>"입니다.</p>
+                <% if (GraduatedTargetAverageGrade) { %>
+                    <p><%=userName%>님께서 설정하신 목표 평균 평점은 "<%=GraduatedTargetAverageGrade%>"입니다.</p>
+                <% } else { %>
+                    <p>아직 설정되지 않았습니다.</p>
+                <% } %>
                 <br>
                 <p>➜ ~ 전학기 평균 평점</p>
                 <p> <%=userName%>님의 전학기 평균 평점은 "<%=avgScore%>"입니다.</p>

@@ -109,7 +109,7 @@ exports.getUserName = async function (id) {
   }
 }
 
-//회원 졸업 목표 평균 학점 가져오기 
+//회원 목표 졸업 평균 학점 가져오기 
 exports.getUserGraduatedTargetAverageGrade = async function (req, res, next) {
   try {
     const result = await usersModel.getUserGraduatedTargetAverageGrade(req.user);
@@ -119,6 +119,18 @@ exports.getUserGraduatedTargetAverageGrade = async function (req, res, next) {
     } else {
       res.status(404).json({ success: false, message: 'Student scores not found' });
     }
+  } catch (error) {
+    next(error);
+  }
+}; 
+
+//회원 목표 졸업 평균 학점 가져오기 
+exports.setUserGraduatedTargetAverageGrade = async function (req, res, next) {
+  try {
+    const { newTarget } = req.body;
+    await usersModel.setUserGraduatedTargetAverageGrade(req.user, newTarget);
+
+    res.status(201).json({ success: true, message: 'The user\'s target has been set successfully.', });
   } catch (error) {
     next(error);
   }

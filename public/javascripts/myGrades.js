@@ -30,7 +30,7 @@ function convertToGradeFormat(str) {
     let year = parts[0]; // 첫 번째 부분은 년도
     let semester = parts[1]; // 두 번째 부분은 학기
 
-    return year + '년도 ' + semester + '학기 ';
+    return year + '년도 ' + semester + '학기';
 }
 
 function displayConvertedGrade() {
@@ -157,4 +157,44 @@ function deleteScore(subjectCode) {
         });
         window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`; 
     }
+}
+
+function setUserGraduatedTargetAverageGrade() {
+    let newTarget = null;
+
+    while (true) {
+        newTarget = prompt('목표 학점을 입력해주세요.', '');
+
+        if (newTarget === null || newTarget === '') {
+            let userResponse = confirm('목표 평균 평점을 삭제하시겠습니까');
+            if (userResponse) newTarget = null;
+            else return;
+            break;
+        }
+
+        newTarget = parseFloat(newTarget);
+        if (!isNaN(newTarget) && 0.0 <= newTarget && newTarget <= 4.5) break;
+
+        alert('올바른 평점을 입력해주세요.');
+    }
+
+    fetch('http://localhost:3000/api/users/setUserGraduatedTargetAverageGrade', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            newTarget: newTarget,
+        }),
+    }).then((response) => {
+        if (!response.ok) {
+            return alert('목표 학점 설정에 실패했습니다.');
+        }
+        window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`; 
+    });
+    window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`; 
+}
+
+function editSubject(subjectCode) {
+    window.location.href = `/editSubject/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${subjectCode}`;
 }

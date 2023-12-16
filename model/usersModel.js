@@ -49,4 +49,9 @@ exports.getUserGraduatedTargetAverageGrade = async function (id) {
   return recordset[0].graduated_target_avg_score;
 }
 
+exports.setUserGraduatedTargetAverageGrade = async function (id, newTarget) {
+  const pool = await poolPromise;
+  await pool.query`UPDATE Student SET graduated_target_avg_score = ${newTarget} WHERE student_id = ${id}`;
+}
+
 // TODO: 회원 탈퇴 기능 구현
