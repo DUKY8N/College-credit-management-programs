@@ -39,7 +39,8 @@
                         <button class="square-button" id="subsequent" onclick="navigateDate('next')">></button>
                         <a href="http://localhost:3000/addSubject/<%=date%>"><button class="square-button" id="add">+ 과목 추가</button></a>
                     </div>
-                    <div class="label">
+                    <div class="label" id="score-label">
+                        <span></span>
                         <span id="subject_code" onclick="navigateScoreSortAndOrder('subject_code')">과목 코드</span>
                         <span id="subject_name" onclick="navigateScoreSortAndOrder('subject_name')">과목 명</span>
                         <span id="academic_credit" onclick="navigateScoreSortAndOrder('academic_credit')">학점</span>
@@ -49,7 +50,8 @@
                 </div>
                 <div class="content-body">
                     <% scores.forEach(function(score) { %>
-                        <article>
+                        <article id="score-article">
+                            <button class="trash-bin-button" onclick="deleteScore('<%= score.subject_code %>')"><img src="/images/trash-bin.png"></button>
                             <p><%= score.subject_code %></p>
                             <p><%= score.subject_name %></p>
                             <p><%= score.academic_credit %></p>

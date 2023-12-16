@@ -138,3 +138,23 @@ function displayGraduatedSortAndOrder() {
     if (graduatedOrder === 'asc') document.getElementById("graduated_"+graduatedSort).innerText = document.getElementById("graduated_"+graduatedSort).innerText + "▲";
     if (graduatedOrder === 'desc') document.getElementById("graduated_"+graduatedSort).innerText = document.getElementById("graduated_"+graduatedSort).innerText + "▼";
 }
+
+function deleteScore(subjectCode) {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+        fetch('http://localhost:3000/api/subjects/deleteScore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                subject_code: subjectCode,
+            }),
+        }).then((response) => {
+            if (!response.ok) {
+                return alert('과목 삭제에 실패했습니다.');
+            }
+            window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`; 
+        });
+        window.location.href = `/myGrades/${date}/${scoreFilter}/${scoreSort}/${scoreOrder}/${graduatedFilter}/${graduatedSort}/${graduatedOrder}`; 
+    }
+}
