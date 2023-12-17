@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페이지 레이아웃</title>
+    <link rel="stylesheet" href="/stylesheets/compareGrades.css">
+    <script>
+        let filter = "<%= filter %>";
+        let sort = "<%= sort %>";
+        let order = "<%= order %>";
+        let friendsId = "<%= friendsId %>";
+    </script>
+    <script src="/javascripts/logOut.js"></script>
+    <script src="/javascripts/compareGrades.js"></script>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <h1>내 학점 비서</h1>
+            <ul id="top-nav">
+                <li><a href="/myGrades">내 학점 목록</a></li>
+                <li id="selected-nav-list"><a href="/myFriends">내 친구 목록</a></li>
+            </ul>
+            <ul id="bottom-nav">
+                <li><a href="/accountSettings">계정 관리</a></li>
+                <li><a onclick="logout()">로그아웃</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <section id="compare-grades">
+                <div class="content-title">
+                    <div>
+                        <a href="/myFriends"><button class="square-button">< 목록으로</button></a>
+                        <span><%= friendsName %>님과의 성적 비교</span>
+                        <button id="filter" class="square-button" onclick="navigateFilter()"></button>
+                    </div>
+                    <div class="label">
+                        <span id="subject_code" onclick="navigateSortAndOrder('subject_code')">과목 코드</span>
+                        <span id="subject_name" onclick="navigateSortAndOrder('subject_name')">과목 명</span>
+                        <span id="user_student_grade" onclick="navigateSortAndOrder('user_student_grade')">내 점수</span>
+                        <span id="friend_student_grade" onclick="navigateSortAndOrder('friend_student_grade')">친구 점수</span>
+                    </div>
+                </div>
+                <div class="content-body">
+                    <% compareGradesList.forEach(function(compareGradesItem) { %>
+                        <article>
+                            <p><%= compareGradesItem.subject_code %></p>
+                            <p><%= compareGradesItem.subject_name %></p>
+                            <p class="grade"><%= compareGradesItem.userStudentGrade %></p>
+                            <p class="grade"><%= compareGradesItem.friendStudentGrade %></p>
+                        </article>
+                    <% }); %>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -13,5 +13,5 @@ router.post("/addFriend", authMiddleware.isLoginStatus, friendsController.addFri
 router.post("/deleteFriend", authMiddleware.isLoginStatus, friendsController.deleteFriend);
 
 //성적비교
-router.post("/compareScore", authMiddleware.isLoginStatus, friendsController.compareScore);
+router.post("/compareGrades", authMiddleware.isLoginStatus, friendsController.compareGrades);
 module.exports = router;

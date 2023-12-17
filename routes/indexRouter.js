@@ -18,6 +18,11 @@ router.get(
 router.get("/addSubject/:date", authMiddleware.isLoginStatusOrRedirect, indexController.getAddSubjectPage);
 router.get("/editSubject/:date/:scoreFilter/:scoreSort/:scoreOrder/:subjectCode", authMiddleware.isLoginStatusOrRedirect, indexController.getEditSubjectPage);
 router.get("/myFriends", authMiddleware.isLoginStatusOrRedirect, indexController.getMyFriendsPage);
+router.get("/compareGrades/:friendsId", authMiddleware.isLoginStatusOrRedirect, indexController.getCompareGrades);
+router.get(
+    "/compareGrades/:friendsId/:filter/:sort/:order",
+    authMiddleware.isLoginStatusOrRedirect, indexController.getCompareGrades
+);
 router.get("/login", authMiddleware.isLogoutStatusOrRedirect, indexController.getLogInPage);
 router.get("/signup", authMiddleware.isLogoutStatusOrRedirect, indexController.getSignUpPage);
 router.get("/accountSettings", authMiddleware.isLoginStatusOrRedirect, indexController.getAccountSettingsPage);

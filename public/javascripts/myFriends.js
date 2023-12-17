@@ -37,3 +37,7 @@ function deleteFriend(friend_id) {
         window.location.href = `/myFriends`; 
     }
 }
+
+function compareGrades(friend_id) {
+    window.location.href = `/compareGrades/${friend_id}`; 
+}

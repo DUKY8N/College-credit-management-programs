@@ -22,26 +22,37 @@ exports.addFriend = async function (id,friend_id) {
 };
 
 //성적 비교
-exports.compareScore = async function (id, friend_id, sort, order) {
+exports.compareGrades = async function (id, friend_id, filter, sort, order) {
   const pool = await poolPromise;
+  let filterQuery = '';
+  switch (filter) {
+    case 'my_subject':
+      filterQuery = `LEFT JOIN`;
+      break;
+    case 'friend_subject':
+      filterQuery = `RIGHT JOIN`;
+      break;
+    case 'all_subject':
+      filterQuery = `FULL OUTER JOIN`;
+      break;
+    default:
+      filterQuery = `FULL OUTER JOIN`;
+  }
+
   let query = `SELECT COALESCE(userStudent.subject_code, friendStudent.subject_code) AS subject_code,
                       COALESCE(userStudent.subject_name, friendStudent.subject_name) AS subject_name,
                       userStudent.grade AS userStudentGrade, 
                       friendStudent.grade AS friendStudentGrade
                       FROM (SELECT * FROM Score WHERE student_id = ${id}) AS userStudent
-                    FULL OUTER JOIN (SELECT * FROM Score WHERE student_id = ${friend_id}) AS friendStudent
+                    ${filterQuery} (SELECT * FROM Score WHERE student_id = ${friend_id}) AS friendStudent
                     ON userStudent.subject_code = friendStudent.subject_code`;
 
  switch(sort) {
-   case 'userStudentGrade':
-     query += `
-     WHERE userStudent.student_id = ${id} 
-     ORDER BY userStudentGrade`;
+   case 'user_student_grade':
+     query += ` ORDER BY userStudentGrade`;
      break;
-   case 'friendStudentGrade':
-     query += `
-     WHERE friendStudent.student_id = ${friend_id} 
-     ORDER BY friendStudentGrade`;
+   case 'friend_student_grade':
+     query += ` ORDER BY friendStudentGrade`;
      break;
      case 'subject_name':
       query += ` ORDER BY subject_name`;
@@ -53,9 +64,7 @@ exports.compareScore = async function (id, friend_id, sort, order) {
       query += ` ORDER BY academic_credit`;
       break;
     default:
-      query += `
-      WHERE userStudent.student_id = ${id}
-      ORDER BY userStudentGrade`; 
+      query += ` ORDER BY subject_code`; 
  }
  switch(order) {
   case 'desc':

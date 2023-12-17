@@ -71,15 +71,16 @@ exports.deleteFriend = async function (req,res,next) {
   }
 };
 //성적비교
-exports.compareScore = async function (req, res, next) {
+exports.compareGrades = async function (req, res, next) {
   try{
-    const {id, friend_id, sort, order} = req.body;
-    const result = await friendsModel.compareScore(id, friend_id, sort, order);
+    const id = req.user;
+    const {friend_id, filter, sort, order} = req.body;
+    const result = await friendsModel.compareGrades(id, friend_id, filter, sort, order);
     
     if (result && result.length > 0) {
       res.status(200).json({ success: true, result });
     } else {
-      res.status(404).json({ success: false, message: 'Student scores not found' });
+      res.status(404).json({ success: false, message: 'Student grades not found' });
     }
   } catch (error) {
     next(error);
@@ -115,7 +116,7 @@ exports.compareScore = async function (req, res, next) {
       return res.status(404).json({ message: "Not found Friend!" });
     }
 
-    await friendsModel.compareScore(friend_id);
+    await friendsModel.compareGrades(friend_id);
     return res.status(200).json({ message: "Compare Score!" });
   }catch (error) {
     next(error);

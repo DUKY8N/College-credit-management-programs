@@ -94,6 +94,24 @@ exports.getMyFriendsPage = async (req, res, next) => {
     res.render('myFriends', { myFriendsList: myFriendsList }); 
 };
 
+exports.getCompareGrades = async (req, res, next) => {
+    const friendsId = req.params.friendsId;
+    const friendsName = await usersController.getUserName(friendsId);
+    const filter = req.params.filter || "filter-all";
+    const sort = req.params.sort || "sort-non";
+    const order = req.params.order || "order-non";
+    let compareGradesList = await friendsModel.compareGrades(req.user, friendsId, filter, sort, order);
+
+    res.render('compareGrades', {
+        compareGradesList: compareGradesList,
+        friendsName: friendsName,
+        filter: filter,
+        sort: sort,
+        order: order,
+        friendsId: friendsId
+    });
+};
+
 exports.getLogInPage = async (req, res, next) => {
     res.render('logIn');
 };

@@ -35,7 +35,7 @@
                             <button class="trash-bin-button" onclick="deleteFriend('<%= friend.friend_student_id %>')"><img src="/images/trash-bin.png"></button>
                             <p><%= friend.friend_student_id %></p>
                             <p><%= friend.name %></p>
-                            <button class="edit-button">방문</button>
+                            <button class="edit-button" onclick="compareGrades('<%= friend.friend_student_id %>')">방문</button>
                         </article>
                     <% }); %>
                 </div>
