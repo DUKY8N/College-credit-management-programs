@@ -38,7 +38,7 @@ exports.avgScore = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
       await pool.query`SELECT ROUND(SUM(academic_credit * grade) / SUM(academic_credit), 2) AS averageScore FROM Score WHERE student_id = ${id};`;
-    return recordset[0].averageScore;
+    return recordset[0]?.averageScore;
 };
 
 //학기평균학점
@@ -46,7 +46,7 @@ exports.semesterAvgScore = async function (id, date) {
   const pool = await poolPromise;
   const { recordset } =
     await pool.query`SELECT ROUND(SUM(academic_credit * grade) / SUM(academic_credit), 2) AS averageScore FROM Score WHERE student_id = ${id} AND date = ${date};`;
-  return recordset[0].averageScore;
+  return recordset[0]?.averageScore;
 };
 
 //졸업요건비교
@@ -64,7 +64,7 @@ exports.listenSubject = async function (id) {
     const pool = await poolPromise;
     const { recordset } =
       await pool.query`SELECT COUNT(*) as listen_Subject FROM Score WHERE student_id = ${id} GROUP BY student_id;`;
-    return recordset[0].listen_Subject;
+    return recordset[0]?.listen_Subject;
 };
 
 //통합정렬
@@ -119,7 +119,7 @@ exports.deleteScore = async function (id, subject_code) {
   const pool = await poolPromise;
 
   const checkResult = await pool.query`SELECT COUNT(1) AS count FROM Score WHERE student_id = ${id} AND subject_code = ${subject_code}`;
-  const count = checkResult.recordset[0].count;
+  const count = checkResult.recordset[0]?.count;
 
   if (count === 0) {
     return false;

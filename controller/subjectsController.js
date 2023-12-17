@@ -107,7 +107,7 @@ exports.listenSubject = async function (req, res, next) {
   try {
     const result = await subjectsModel.listenSubject(req.user);
 
-    if (result && result.length > 0) {
+    if (result) {
       res.status(200).json({ success: true, message: 'Student scores exist', result });
     } else {
       res.status(404).json({ success: false, message: 'Student scores not found' });

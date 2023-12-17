@@ -38,7 +38,7 @@ exports.getUserName = async function (id) {
   const pool = await poolPromise;
   const { recordset } =
     await pool.query`SELECT name FROM Student WHERE student_id = ${id}`;
-  return recordset[0].name;
+  return recordset[0]?.name;
 };
 
 exports.getUserGraduatedTargetAverageGrade = async function (id) {
@@ -46,7 +46,7 @@ exports.getUserGraduatedTargetAverageGrade = async function (id) {
   const { recordset } =
     await pool.query`SELECT graduated_target_avg_score FROM Student WHERE student_id = ${id}`;
 
-  return recordset[0].graduated_target_avg_score;
+  return recordset[0]?.graduated_target_avg_score;
 }
 
 exports.setUserGraduatedTargetAverageGrade = async function (id, newTarget) {
