@@ -32,9 +32,9 @@ exports.getMyGradesPage = async (req, res, next) => {
     const graduatedOrder = req.params.graduatedOrder || "graduatedOrder-non";
     const dateScores = await subjectsModel.filterAndSortScores(req.user, date, scoreFilter, scoreSort, scoreOrder);
     const graduatedList = await subjectsModel.sortGraduated(req.user, graduatedFilter, graduatedSort, graduatedOrder);
-    const avgScore = await subjectsModel.avgScore(req.user);
+    const avgScore = await subjectsModel.avgScore(req.user) || 0;
     const semesterAvgScore = await subjectsModel.semesterAvgScore(req.user, date) || 0;
-    const listenSubjectCount = await subjectsModel.listenSubject(req.user);
+    const listenSubjectCount = await subjectsModel.listenSubject(req.user) || 0;
     const GraduatedTargetAverageGrade = await usersModel.getUserGraduatedTargetAverageGrade(req.user);
     
 
