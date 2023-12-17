@@ -3,10 +3,10 @@ const { poolPromise } = require("./index");
 
 //성적등록
 exports.addScore = async function (userScore) {
-    const { subject_code, academic_credit, subject_name, grade, date, student_id, target_grade } = userScore;
+    const { subject_code, academic_credit, subject_name, grade, date, student_id } = userScore;
     const pool = await poolPromise;
     await pool.query`INSERT INTO Score
-                        VALUES (${subject_code}, ${subject_name}, ${academic_credit}, ${grade}, ${date}, ${student_id}, ${target_grade});`;       
+                        VALUES (${subject_code}, ${subject_name}, ${academic_credit}, ${grade}, ${date}, ${student_id});`;       
 };
 
 //성적수정
