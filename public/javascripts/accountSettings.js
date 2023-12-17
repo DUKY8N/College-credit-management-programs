@@ -28,3 +28,25 @@ async function accountSet() {
           alert(error.message);
         }
 }
+
+async function deleteAccount() {
+  if (!confirm('정말로 탈퇴하시겠습니까?')) return;
+  try {
+    const response = await fetch('http://localhost:3000/api/users/deleteUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ }),
+    });
+    //응답이 성공적이지 않으면 오류 메시지 표시
+    if (!response.ok) {
+      const errorData = await response;
+      return alert(errorData.message || '회원탈퇴에 실패했습니다.');
+    }
+    alert('회원탈퇴가 완료되었습니다.');
+    window.location.href = '/'; 
+  } catch (error) {
+    alert(error.message);
+  }
+}

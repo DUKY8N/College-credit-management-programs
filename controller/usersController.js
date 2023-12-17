@@ -135,4 +135,17 @@ exports.setUserGraduatedTargetAverageGrade = async function (req, res, next) {
   }
 }; 
 
-//TODO: 회원탈퇴
+//회원 탈원
+exports.deleteUser = async function (req, res, next) {
+  try {
+    await usersModel.deleteUser(req.user);
+    req.logOut(function (err) {
+      if (err) {
+        return next(createError(500, "logout_error"));
+      }
+      return res.status(201).json({ success: true, message: "The user has been deleted and logged out successfully." });
+    });
+  } catch (error) {
+    next(error);
+  }
+}

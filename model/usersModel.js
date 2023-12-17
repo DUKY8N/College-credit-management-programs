@@ -54,4 +54,9 @@ exports.setUserGraduatedTargetAverageGrade = async function (id, newTarget) {
   await pool.query`UPDATE Student SET graduated_target_avg_score = ${newTarget} WHERE student_id = ${id}`;
 }
 
-// TODO: 회원 탈퇴 기능 구현
+exports.deleteUser = async function (id) {
+  const pool = await poolPromise;
+  await pool.query`DELETE FROM Student WHERE student_id = ${id}`;
+  await pool.query`DELETE FROM Score WHERE student_id = ${id}`;
+  await pool.query`DELETE FROM Friend WHERE student_id = ${id} OR friend_student_id = ${id}`;
+}

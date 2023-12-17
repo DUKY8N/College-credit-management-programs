@@ -80,3 +80,19 @@ button:hover {
     font-weight: bold;
     color: #333;
 }
+
+.delete-account-link {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.delete-account-link a {
+    color: #cf2300;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.delete-account-link a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

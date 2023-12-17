@@ -27,4 +27,7 @@ router.get("/getUserGraduatedTargetAverageGrade" , authMiddleware.isLoginStatus,
 //회원 목표 졸업 평균 학점 설정하기
 router.post("/setUserGraduatedTargetAverageGrade" , authMiddleware.isLoginStatus, usersController.setUserGraduatedTargetAverageGrade);
 
+//회원 탈퇴
+router.post("/deleteUser", authMiddleware.isLoginStatus, usersController.deleteUser);
+
 module.exports = router;
