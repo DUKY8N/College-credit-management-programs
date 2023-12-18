@@ -52,10 +52,9 @@ exports.semesterAvgScore = async function (id, date) {
 //졸업요건비교
 exports.Graduated = async function (id) {
   const pool = await poolPromise;
-  const { recordset } = await pool.query`SELECT graduated.subject_code, graduated.subject_name, Score.academic_credit, Score.grade,
-                                         CASE WHEN Score.subject_code IS NOT NULL THEN '1' ELSE '0' END as completion_status
-                                         FROM graduated
-                                         LEFT JOIN Score ON graduated.subject_code = Score.subject_code AND Score.student_id = ${id};`;
+  const { recordset } = await pool.query`SELECT subject_code, subject_name, academic_credit, grade
+                                         FROM viewGraduatedScores
+                                         WHERE student_id = ${id} OR student_id IS NULL`;
   return recordset;
 };
 
@@ -132,35 +131,33 @@ exports.deleteScore = async function (id, subject_code) {
 //졸업요건정렬
 exports.sortGraduated = async function (id, filter, sort, order) {
   const pool = await poolPromise;
-  let query = `SELECT graduated.subject_code, graduated.subject_name, Score.academic_credit, Score.grade,
-               CASE WHEN Score.subject_code IS NOT NULL THEN '1' ELSE '0' END as completion_status
-               FROM graduated
-               LEFT JOIN Score ON graduated.subject_code = Score.subject_code AND Score.student_id = ${id}`;
+  let query = `SELECT * FROM viewGraduatedScores
+               WHERE student_id = ${id} OR student_id IS NULL`;
 
   if (filter === 'major') {
-    query += ` WHERE Graduated.subject_code LIKE ('%COM%')`;
+    query += ` AND subject_code LIKE ('%COM%')`;
   } else if (filter === 'notmajor') {
-    query += ` WHERE Graduated.subject_code NOT LIKE ('%COM%')`;
+    query += ` AND subject_code NOT LIKE ('%COM%')`;
   }
 
   switch(sort) {
     case 'grade':
-      query += ` ORDER BY Score.grade`;
+      query += ` ORDER BY grade`;
       break;
     case 'subject_name':
-      query += ` ORDER BY graduated.subject_name`;
+      query += ` ORDER BY subject_name`;
       break;
     case 'subject_code':
-      query += ` ORDER BY graduated.subject_code`;
+      query += ` ORDER BY subject_code`;
       break;
     case 'academic_credit':
-      query += ` ORDER BY Score.academic_credit`;
+      query += ` ORDER BY academic_credit`;
       break;
     case 'completion_status':
       query += ` ORDER BY completion_status`;
       break;
     default:
-      query += ` ORDER BY Score.grade`;
+      query += ` ORDER BY grade`;
   }
 
   switch(order) {
