@@ -70,7 +70,7 @@ exports.listenSubject = async function (id) {
 //통합정렬
 exports.filterAndSortScores = async function (id, date, filter, sort, order) {
   const pool = await poolPromise;
-  let query = `SELECT subject_code, subject_name, academic_credit, grade FROM Score WHERE student_id = ${id}`;
+  let query = `SELECT subject_code, subject_name, academic_credit, grade FROM viewScore WHERE student_id = ${id}`;
 
   if (date) {
     query += ` AND date = '${date}'`;
