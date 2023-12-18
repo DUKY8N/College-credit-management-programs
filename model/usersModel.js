@@ -56,7 +56,7 @@ exports.setUserGraduatedTargetAverageGrade = async function (id, newTarget) {
 
 exports.deleteUser = async function (id) {
   const pool = await poolPromise;
-  await pool.query`DELETE FROM Student WHERE student_id = ${id}`;
-  await pool.query`DELETE FROM Score WHERE student_id = ${id}`;
   await pool.query`DELETE FROM Friend WHERE student_id = ${id} OR friend_student_id = ${id}`;
+  await pool.query`DELETE FROM Score WHERE student_id = ${id}`;
+  await pool.query`DELETE FROM Student WHERE student_id = ${id}`;
 }
